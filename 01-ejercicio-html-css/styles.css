@@ -1,1 +1,578 @@
-/* Aquí el contenido de tu archivo styles.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #3b4550;
+  --primary-dark: #0a3d66;
+  --primary-hover: #0d5ba8;
+  --primary-light: #09f;
+  --background: #06182a;
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border: rgba(255, 255, 255, 0.1);
+  --card-bg: #1e293b;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --input-bg: #1e293b;
+  --hsla-example: hsla(210, 100%, 56%, 1);
+}
+
+@font-face {
+  font-family: "Inter Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2)
+    format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+body {
+  font-family: system-ui;
+  background-color: var(--background);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 900;
+  margin-bottom: 0.2rem;
+  line-height: 1.2;
+  text-wrap: bN halance;
+}
+
+h1 + p {
+  text-wrap: balance;
+  margin-bottom: 2rem;
+}
+
+header {
+  border-bottom: 1px solid var(--border);
+  background: var(--background);
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+}
+/* Navegación del header a otras páginas */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+    font-weight: 500;
+
+    &:hover,
+    &:focus {
+      color: var(--primary);
+      outline: none;
+    }
+  }
+}
+/* Boton subir CV*/
+header div a {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: #334155;
+  color: var(--text-primary);
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  /* TODO */
+}
+header .user-section a {
+  background-color: var(--primary-dark);
+  color: var(--primary-light);
+  transition: background-color 0.2s, color 0.2s;
+}
+header .user-section a:hover,
+header .user-section a:focus {
+  background-color: var(--primary-hover);
+  color: var(--text-primary);
+  outline: none;
+}
+
+/*Alinea los elementos del div con el header*/
+header div {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+/*Icono de usuario*/
+header div img {
+  padding: 0.1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary);
+  align-self: flex-end;
+}
+
+/* Hero */
+main .hero {
+  height: 500px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    padding-top: 36px;
+  }
+
+  & > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    mask-image: linear-gradient(
+      to bottom,
+      rgba(16, 25, 34, 1) 5%,
+      rgba(16, 25, 34, 0) 80%
+    );
+  }
+}
+/* Formulario de Búsqueda */
+form {
+  max-width: 42rem;
+  width: 100%;
+  margin: 0 auto;
+  padding-inline: 1rem;
+}
+/*no hace nada*/
+/*form > div {
+  display: flex;
+  align-items: center;
+  background-color: var(--input-bg);
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px var(--shadow);
+  padding: 0.5rem;
+  gap: 0.5rem;
+}
+
+form span {
+  padding-left: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+*/
+.main-search {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  padding: 0.75rem 0.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.main-search::placeholder {
+  color: var(--text-muted);
+}
+
+form button[type="submit"] {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+  color: var(--text-primary);
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-family: inherit;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+form button[type="submit"]:hover,
+form button[type="submit"]:focus {
+  background-color: var(--primary-hover);
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+/* Features Section */
+main > section:nth-child(2) {
+  padding-inline: 1rem;
+  background-color: var(--background);
+  padding-top: 2rem;
+
+  & > header {
+    gap: 2px;
+    flex-direction: column;
+
+    h2 {
+      margin-bottom: 0;
+    }
+
+    p {
+      opacity: 0.75;
+    }
+  }
+}
+
+main > section:nth-child(2) h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+main > section:nth-child(2) > div > div:first-child > p {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  max-width: 12rem;
+  margin: 0 auto;
+}
+
+/* Grid de Features */
+main > section:nth-child(2) footer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+/* Feature Cards */
+article.cards {
+  background-color: var(--card-bg);
+  padding: 2rem;
+  margin-bottom: 16px;
+  border-radius: 0.5rem;
+  box-shadow: 0px 1px 3px 0 var(--shadow);
+
+  svg {
+    color: var(--primary-light);
+    background: rgba(0, 153, 255, 0.3);
+    border-radius: 100%;
+    width: 64px;
+    height: 64px;
+    padding: 10px;
+  }
+
+  h3 {
+    font-weight: 500;
+  }
+
+  p {
+    color: var(--text-muted);
+  }
+}
+/* Footer */
+footer {
+  background-color: var(--background);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 16px;
+}
+/*Header search*/
+
+/* Hero página de búsqueda */
+main section.hero-search {
+  display: flex;
+  max-width: 1200px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin: 2rem auto;
+
+  h1 {
+    padding-top: 10px;
+    font-weight: 650;
+  }
+}
+/*Form de busqueda*/
+.secundary-search {
+  box-shadow: 0 10px 15px -3px var(--shadow);
+  background-color: var(--input-bg);
+  display: flex;
+  width: 80vw;
+  max-width: 1200px;
+  height: 3rem;
+  align-items: center;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  gap: 0.5rem;
+
+  input {
+    color: var(--text-primary);
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0.75rem 0.5rem;
+    font-size: 1.2rem;
+    font-family: inherit;
+  }
+}
+
+/*Filtros de busqueda*/
+
+.filters {
+  max-width: 1200px;
+  width: 80vw;
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  margin: 2rem auto;
+  flex-wrap: wrap;
+
+  select {
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    border-radius: 0.5rem;
+    padding: 0.5rem 20px;
+    border: none;
+    font-size: 1rem;
+    font-family: inherit;
+    box-shadow: 0 10px 15px -3px var(--shadow);
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 0.25rem; /* Espacio para la flecha personalizada */
+    cursor: pointer;
+  }
+}
+
+/* Resultados de búsqueda */
+
+.job-results {
+  max-width: 1200px;
+  width: 80vw;
+  margin: 0 auto;
+  padding: 8px 10px 4rem 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.jobs {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background-color: transparent;
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 1px 3px 0 var(--shadow);
+}
+
+h3 + p {
+  color: var(--text-muted);
+  margin: 0rem 0 0.5rem 0;
+}
+
+.jobs div {
+  display: flex;
+  flex-direction: column;
+}
+
+.job-apply button {
+  color: var(--text-primary);
+  background-color: var(--primary-light);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  flex-wrap: wrap;
+  margin-left: auto;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    color: var(--text-primary);
+    background-color: var(--primary-hover);
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+  &:disabled {
+    background-color: var(--text-muted);
+    opacity: 0.8;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+/* Paginador */
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2rem;
+  gap: 0.5rem;
+}
+
+.num {
+  display: flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--text-muted);
+  border-radius: 0.5rem;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover,
+  &:focus {
+    background-color: var(--primary-hover);
+    color: var(--text-primary);
+    outline: none;
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+}
+#active {
+  background-color: var(--primary-light);
+  color: var(--text-primary);
+  font-weight: 700;
+  pointer-events: none;
+}
+
+/* Header search*/
+header.header-search div nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: var(--text-primary);
+  display: inline-block;
+  text-decoration: none;
+
+  a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+    font-weight: 700;
+    background-color: transparent;
+
+    &:hover,
+    &:focus {
+      color: var(--primary);
+      outline: none;
+    }
+  }
+}
+
+/* job-1.html */
+main {
+  max-width: 1200px;
+  width: 80vw;
+  margin: 0 auto;
+  line-height: 1.6;
+  padding: 2rem 5rem;
+}
+/* Organiza entre titulo y header*/
+.topJob {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+/*mutea la palabra Empleos /*/
+.emp {
+  color: var(--text-muted);
+}
+
+/* hero-job-1*/
+main section.hero-job-1 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap:  3rem;
+  padding: 0rem 2rem;
+
+  h1 {
+    font-weight: 550;
+  }
+  p{
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 0rem;
+  }
+}
+  .description {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 2rem auto;
+    padding:0rem 2rem;
+    h2{
+      font-weight: 500;
+      margin-top: 1.5rem;
+    }
+}
+
+
+/* button-apply-now en job-1.html */
+.apply-now {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  background-color: var(--primary-light);
+  padding: 0.8rem 1.3rem;
+  border-radius: 0.9rem;
+  flex-wrap: wrap;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    color: var(--text-primary);
+    background-color: var(--primary-hover);
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+  &:disabled {
+    background-color: var(--text-muted);
+    opacity: 0.8;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+ul {
+  list-style: none; /* Quita los puntos por defecto */
+  padding: 0;
+}
+
+ul li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem; /* separa los elementos */
+  gap: 0.7rem;
+  svg {
+    color: var(--primary-light);
+  }
+}
+
+/* Aquí agregamos el check como fondo SVG */
