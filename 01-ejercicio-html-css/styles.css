@@ -61,8 +61,9 @@ header {
   padding: 0.5rem 1rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+  justify-content: center;
+  gap: .5rem 2rem;
+  flex-wrap: wrap;
 
   h2 {
     font-size: 1.25rem;
@@ -163,7 +164,6 @@ form {
   max-width: 42rem;
   width: 100%;
   margin: 0 auto;
-  padding-inline: 1rem;
 }
 /*no hace nada*/
 /*form > div {
@@ -313,7 +313,7 @@ main section.hero-search {
   box-shadow: 0 10px 15px -3px var(--shadow);
   background-color: var(--input-bg);
   display: flex;
-  width: 80vw;
+  width: 100%;
   max-width: 1200px;
   height: 3rem;
   align-items: center;
@@ -337,7 +337,7 @@ main section.hero-search {
 
 .filters {
   max-width: 1200px;
-  width: 80vw;
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   gap: 0.5rem;
@@ -365,12 +365,16 @@ main section.hero-search {
 
 .job-results {
   max-width: 1200px;
-  width: 80vw;
+  width: 100%;
   margin: 0 auto;
   padding: 8px 10px 4rem 10px;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+}
+
+.job-results ul {
+  list-style: none;
 }
 
 .jobs {
@@ -458,7 +462,12 @@ h3 + p {
   pointer-events: none;
 }
 
-/* Header search*/
+header.header-search div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 header.header-search div nav {
   display: flex;
   align-items: center;
@@ -468,6 +477,7 @@ header.header-search div nav {
   color: var(--text-primary);
   display: inline-block;
   text-decoration: none;
+  flex-wrap: wrap;
 
   a {
     text-decoration: none;
@@ -487,10 +497,10 @@ header.header-search div nav {
 /* job-1.html */
 main {
   max-width: 1200px;
-  width: 80vw;
+  width: 100%;
   margin: 0 auto;
   line-height: 1.6;
-  padding: 2rem 5rem;
+  padding: 2rem 1rem;
 }
 /* Organiza entre titulo y header*/
 .topJob {
@@ -576,3 +586,9 @@ ul li {
 }
 
 /* Aquí agregamos el check como fondo SVG */
+
+@media (width >= 768px) {
+  header {
+    justify-content: space-between;
+  }  
+}
