@@ -8,6 +8,7 @@ fetch("./data.json")
   .then((jobs) => {
     jobs.forEach((job) => {
       const article = document.createElement("li");
+      article.className = "job-card";
       article.dataset.modalidad = job.data.modalidad;
       article.dataset.nivel = job.data.nivel;
       article.dataset.tecnologia = job.data.technology;
@@ -27,4 +28,6 @@ fetch("./data.json")
             `;
       container.appendChild(article);
     });
+    document.dispatchEvent(new Event("jobsLoaded"));
   });
+   
