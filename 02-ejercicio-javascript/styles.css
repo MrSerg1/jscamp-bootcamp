@@ -296,7 +296,8 @@ main > section:nth-child(2) footer {
 }
 
 /* Feature Cards */
-/* article {
+/*
+ article {
   background-color: var(--card-bg);
   padding: 2rem;
   margin-bottom: 16px;
