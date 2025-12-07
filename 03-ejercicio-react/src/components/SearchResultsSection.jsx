@@ -1,10 +1,11 @@
 import { JobListings } from "./JobsListings.jsx";
+import jobsData from "../data.json";
 
 export function SearchResultsSection() {
   return (
     <section>
       <h2 style={{ textAlign: "center" }}>Resultados de búsqueda</h2>
-      <JobListings />
+      <JobListings jobs={jobsData}/>
       <nav className="pagination">
         <a href="#">
           <svg

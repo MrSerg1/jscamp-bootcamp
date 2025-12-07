@@ -1,13 +1,12 @@
 import { JobCard } from "./JobCard.jsx";
-import jobsData from "../data.json";
 
-
-export function JobListings() {
+export function JobListings({jobs}) {
   return (
     <>
-      {jobsData.length > 0 ? (
+      {jobs.length > 0 ? (
         <div className="jobs-listings">
-          {jobsData.map((job) => (
+          
+          {jobs.map((job) => (
             <JobCard key={job.id} job={job} />
           ))}
         </div>
