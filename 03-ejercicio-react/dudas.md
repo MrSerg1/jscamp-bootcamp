@@ -3,6 +3,9 @@
 ## Primera parte
 
 <!-- Dudas de la primera parte del ejercicio -->
+- Cuando ejecuto npm run dev recibo un error, luego note que hay un archivo pnpm, debo instalar pnpm o algo por el estilo?
+
+
 
 ## Segunda parte
 
