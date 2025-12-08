@@ -435,6 +435,7 @@ article {
   justify-content: center;
   gap: 0.5rem;
   margin-block: 2rem;
+  user-select: none;
 
   a {
     display: flex;

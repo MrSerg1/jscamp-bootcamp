@@ -136,7 +136,7 @@ Esta tarea se explica muy bien [en la clase de Paginación](https://www.jscamp.d
 
 Una cosa que te pediremos una vez termines con estos puntos es que puedas dar interactividad visual a los botones, indicando cuál es el activo y que cambie a medida que le des clic.
 
-Esto lo puedes hacer con `useState` y pasando funciones como parámetro, tal como vimos en [esta clase](https://www.jscamp.dev/introduccion-a-react/estado-por-props-lifting-state).
+Esto lo puedes hacer con `useState` y pasando funciones como parámetro, tal como vimos en [esta clase](c).
 
 ---
 
