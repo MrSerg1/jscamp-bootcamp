@@ -1,10 +1,22 @@
-  export function SearchFormSection() {
+  export function SearchFormSection({ onChangeFilter }) {
+
+    const handleFilChange = (event) =>{
+      const formData = new FormData(event.currentTarget);
+      const filters = {
+        search: formData.get("search-value"),
+        technology: formData.get("technology-value"),
+        location: formData.get("location-value"),
+        experienceLvl: formData.get("experience-level-value")
+      }
+      onChangeFilter(filters);
+    }
+    
     return (
         <section className="jobs-search">
           <h1>Encuentra tu próximo trabajo</h1>
           <p>Explora miles de oportunidades en el sector tecnológico.</p>
 
-          <form id="empleos-search-form" role="search">
+          <form id="empleos-search-form" role="search" onChange={handleFilChange}>
             <div className="search-bar">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

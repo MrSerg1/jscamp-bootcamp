@@ -130,7 +130,7 @@ Siguiendo con lo que ya hemos visto, la idea es que:
 - Hacer un `.map()` sobre el rango de páginas totales y mostrar un botón por cada una.
 - Si la página actual es la primera, deshabilitar el botón de la página anterior.
 - Si la página actual es la última, deshabilitar el botón de la página siguiente.
-- Destacar la página actual con un color diferente.
+- Destacar la página actual con un color diferente.pnp
 
 Esta tarea se explica muy bien [en la clase de Paginación](https://www.jscamp.dev/introduccion-a-react/paginacion-props-comunicacion). Puedes usarla de referencia para acompañarte en el desarrollo.
 
