@@ -17,6 +17,7 @@ export function SearchResultsSection({jobsData, currentPage, onPageChange}) {
       <h2 style={{ textAlign: "center" }}>Resultados de búsqueda</h2>
       <JobListings jobs={pagedResults} />
       <Pagination
+        jobs={pagedResults}
         totalPages={totalPages}
         currentPage={currentPage}
         onPageChange={onPageChange}
