@@ -6,6 +6,8 @@ fetch("./data.json")
   })
 
   .then((jobs) => {
+    /* `document.createDocumentFragment()` lo que hace es crear un contenedor virtual que almacena todos los elementos antes de insertarlos en el DOM. Los beneficios de esto es a nivel de rendimiento, en vez de repintar el HTML por cada elemento que dibujemos en el `forEach`, lo que hacemos es guardar todo en este contenedor virtual, y luego dibujar una sola vez el HTML con todos los elementos juntos. */
+    const fragmentContainer = document.createDocumentFragment();
     jobs.forEach((job) => {
       const article = document.createElement("li");
       article.className = "job-card";
@@ -26,8 +28,10 @@ fetch("./data.json")
              <button class="button-apply-job">Aplicar</button>
             </div>
             `;
-      container.appendChild(article);
+
+      fragmentContainer.appendChild(article);
     });
+    container.appendChild(fragmentContainer);
     document.dispatchEvent(new Event("jobsLoaded"));
   });
    
