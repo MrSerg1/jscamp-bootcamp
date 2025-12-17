@@ -1,4 +1,15 @@
+import { useRouter } from "../hooks/useRouter.jsx";
+
 export function HomePage() {
+  const { navigateTo } = useRouter()
+  const handleSubmit = (event) =>{
+    event.preventDefault()
+    const formData = new FormData (event.currentTarget)
+    const textToSearch = formData.get("search")
+
+    const url = textToSearch ? `/search?text=${encodeURIComponent(textToSearch)}` : "/search"
+    navigateTo (url)
+  }
   return (
     <main>
       <section>
@@ -10,7 +21,7 @@ export function HomePage() {
           Únete a la comunidad más grande de desarrolladores y encuentra tu próxima oportunidad.
         </p>
 
-        <form role="search">
+        <form role="search" onSubmit={handleSubmit}>
           <div>
             <svg
               width="24"

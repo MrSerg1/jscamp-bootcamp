@@ -35,6 +35,12 @@
 ## Séptima parte
 
 <!-- Dudas de la séptima parte del ejercicio -->
+- Cuando haces un custom Hook he visto que puedes seleccionar solo uno de los valores que exporta el hook, por ejemplo se puede usar const { navigateTo } = useRouter(); y se selecciona el navigateTo, por qué no se selecciona el currentPath?
+- Es por la desectructuración de objetos en js.
+
+-¿Por qué el component en Route debe ir en mayuscula?
+
+
 
 ## Ejercicio extra
 

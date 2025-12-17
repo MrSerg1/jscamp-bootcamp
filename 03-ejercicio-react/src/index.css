@@ -464,3 +464,40 @@ article {
     }
   }
 }
+.not-found-container {
+    /* Ocupa toda la altura visible del viewport */
+    min-height: 100%;
+    /* Usa Flexbox para centrar el contenido */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrado vertical */
+    align-items: center;     /* Centrado horizontal */
+    text-align: center;
+  }
+
+
+.not-found-image {
+    max-width: 100%;
+    width: 400px; 
+    height: auto;    
+}
+
+.not-found-container h1 {
+    font-size: 2.5rem; /* Tamaño grande para el título */
+    color: #00bfff; /* Color brillante para destacar el titulo */
+    /* Efecto de sombra de neón para el texto */
+    text-shadow: 0 0 7px rgba(0, 191, 255, 0.8);
+    margin-bottom: 2rem;
+    
+}
+
+@media (max-width: 600px) {
+    .not-found-image {
+        width: 90%;
+        max-width: 300px; /* Limita un poco más en móviles */
+    }
+    
+    .not-found-container h1 {
+        font-size: 1.8em;
+    }
+}
