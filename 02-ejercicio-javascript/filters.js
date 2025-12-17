@@ -2,13 +2,19 @@
 //inputs del filtro
 
 const selects = document.querySelectorAll(".search-filters select");
+// si bien se puede usar el querySelectorAll para seleccionar los selects, es mejor manejar cada selector por separado. Esto es por un tema de mantenibilidad y claridad en el código. Imagina que cambiamos el orden de los select, o agregamos nuevos que tengan funcionalidades diferentes... si usamos el método anterior, se rompería nuestro código. De esta manera, podemos gestionar cada select de manera precisa.
+const technologySelectElement = document.getElementById("filter-technology");
+const locationSelectElement = document.getElementById("filter-location");
+const lvlSelectElement = document.getElementById('filter-experience-level')
 const searchInput = document.querySelector(".search-bar input");
 
 function applyFilters() {
-  const technology = selects[0]?.value ?? "";
-  const location = selects[1]?.value ?? "";
-  const lvl = selects[2]?.value ?? "";
-  const textInput = searchInput?.value.toLowerCase() ?? "";
+  const technology = technologySelectElement?.value ?? "";
+  const location = locationSelectElement?.value ?? "";
+  const lvl = lvlSelectElement?.value ?? "";
+
+  // agregamos un .trim() por si el usuario ingresa como texto espacios vacíos
+  const textInput = searchInput?.value.toLowerCase().trim() ?? "";
   // Separamos los valores de los selects y el input de texto en variables separadas.
   const allJobs = Array.from(document.querySelectorAll(".job-card")); // Obtenemos todos los trabajos que queremos filtrar en un arreglo de objetos.
   return allJobs.filter((job) => {
