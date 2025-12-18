@@ -17,6 +17,7 @@ export function useRouter() {
     const navEvent = new PopStateEvent("popstate");
     window.dispatchEvent(navEvent);
   };
+  
   return { 
     currentPath,
     navigateTo 

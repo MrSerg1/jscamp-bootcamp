@@ -3,14 +3,14 @@
 import { SearchFormSection } from "../components/SearchFormSection.jsx";
 import { SearchResultsSection } from "../components/SearchResultsSection.jsx";
 
-
-
 import jobsData from "../data.json";
 
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "../hooks/useRouter.jsx";
+import { useNewUrl } from "../hooks/useNewUrl.jsx";
 
 export function Search() {
+  // Estados y router
   const { navigateTo } = useRouter();
   const [currentPage, setCurrentPage] = useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -27,6 +27,12 @@ export function Search() {
       experienceLvl: params.get("level") || "",
     };
   });
+
+  const [jobs, setJobs] = useState([])
+  const [total, setTotal] = useState (0)
+  const [isLoading, setIsLoading] = useState (true)
+
+  // Handlers
   const handleChangeFilter = (newFilters) => {
     setFilters({
       search: newFilters.search,
@@ -40,58 +46,45 @@ export function Search() {
     setCurrentPage(page);
   };
 
-
+  // Efectos
+  // Set de los filtros en la URL
   useEffect(() => {
-
-    const params = new URLSearchParams()
-
-    if (filters.search) {
-      params.append("text", filters.search);
-    }
-    if (filters.technology) {
-      params.append("technology", filters.technology);
-    }
-    if (filters.location) {
-      params.append("type", filters.location);
-    }
-    if (filters.experienceLvl) {
-      params.append("level", filters.experienceLvl);
-    }
-    if (currentPage > 1) {
-      params.append("page", currentPage);
-    }
-    const queryParams = params.toString();
-
-    const newUrl = queryParams?`${window.location.pathname}?${queryParams}`:`${window.location.pathname}`;
-
+    const newUrl = useNewUrl({ filters, currentPage });
     navigateTo(newUrl);
   }, [filters, navigateTo, currentPage]);
-
-  //Array jobs filtrados
-  const filteredJobs = jobsData.filter((job) => {
-    const matchesSearch =
-      filters.search === "" ||
-      job.titulo.toLowerCase().includes(filters.search.toLowerCase());
-    const matchesTechnology =
-      filters.technology === "" || filters.technology === job.data.technology;
-    const matchesLocation =
-      filters.location === "" || filters.location === job.data.modalidad;
-    const matchesExpLvl =
-      filters.experienceLvl === "" || filters.experienceLvl === job.data.nivel;
-    return (
-      matchesSearch && matchesTechnology && matchesLocation && matchesExpLvl
-    );
-  });
+  // Efecto para el fetch
+  useEffect(()=>{
+    async function fetchJobs(){
+      setIsLoading(true)
+      try {
+        const response = await fetch ("https://jscamp-api.vercel.app/api/jobs")
+        const json = await response.json()
+        setJobs (json.data)
+        setTotal (json.total)
+      } 
+      catch (error) {
+        console.error("Error fetching jobs data:", error);
+      } 
+      finally {
+        setIsLoading(false)
+      }
+    }
+    fetchJobs();
+  }, [])
+  // Set titulo de la página
+  useEffect(() => {
+    document.title = `Resultados ${total} - Página ${currentPage} - DevJobs`;
+  }, [total, currentPage])
 
   return (
     <>
       <main>
-        <SearchFormSection 
-        onChangeFilter={handleChangeFilter} 
-        initialFilters={filters}
+        <SearchFormSection
+          onChangeFilter={handleChangeFilter}
+          initialFilters={filters}
         />
         <SearchResultsSection
-          jobsData={filteredJobs}
+          jobsData={jobs}
           currentPage={currentPage}
           onPageChange={handlePageChange}
         />

@@ -19,14 +19,16 @@ export function SearchFormSection({ onChangeFilter, initialFilters }) {
     }, 500);
   };
 
-  
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <section className="jobs-search">
       <h1>Encuentra tu próximo trabajo</h1>
       <p>Explora miles de oportunidades en el sector tecnológico.</p>
 
-      <form id="empleos-search-form" role="search" onChange={handleFilChange}>
+      <form id="empleos-search-form" role="search" onChange={handleFilChange} onSubmit={handleSubmit}>
         <div className="search-bar">
           <svg
             xmlns="http://www.w3.org/2000/svg"
