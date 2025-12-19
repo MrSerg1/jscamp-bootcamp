@@ -1,4 +1,4 @@
-export function Pagination({ totalPages, onPageChange, currentPage, jobs, total }) {
+export function Pagination({ totalPages, onPageChange, currentPage, total }) {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   // Handlers

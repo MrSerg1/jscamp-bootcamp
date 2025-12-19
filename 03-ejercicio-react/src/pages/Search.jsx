@@ -3,12 +3,9 @@
 import { SearchFormSection } from "../components/SearchFormSection.jsx";
 import { SearchResultsSection } from "../components/SearchResultsSection.jsx";
 
-import jobsData from "../data.json";
-
 import { useState, useEffect } from "react";
 import { useRouter } from "../hooks/useRouter.jsx";
 import { useNewUrl } from "../hooks/useNewUrl.jsx";
-import robot from "../assets/404robot.png";
 
 export function Search() {
   // Estados y router
@@ -18,7 +15,6 @@ export function Search() {
     const page = Number(params.get("page"));
     return isNaN(page) || page < 1 ? 1 : page;
   });
-
   const [filters, setFilters] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return {
@@ -28,7 +24,6 @@ export function Search() {
       experienceLvl: params.get("level") || "",
     };
   });
-
   const [jobs, setJobs] = useState([])
   const [total, setTotal] = useState (0)
   const [isLoading, setIsLoading] = useState (true)
