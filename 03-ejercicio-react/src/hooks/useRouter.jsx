@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export function useRouter() {
-    const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
   useEffect(() => {
     const handleLocationChange = () => {
       setCurrentPath(window.location.pathname);
@@ -17,9 +17,9 @@ export function useRouter() {
     const navEvent = new PopStateEvent("popstate");
     window.dispatchEvent(navEvent);
   };
-  
-  return { 
+
+  return {
     currentPath,
-    navigateTo 
-};
+    navigateTo,
+  };
 }

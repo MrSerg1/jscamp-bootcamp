@@ -24,9 +24,9 @@ export function Search() {
       experienceLvl: params.get("level") || "",
     };
   });
-  const [jobs, setJobs] = useState([])
-  const [total, setTotal] = useState (0)
-  const [isLoading, setIsLoading] = useState (true)
+  const [jobs, setJobs] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Handlers
   const handleChangeFilter = (newFilters) => {
@@ -44,52 +44,56 @@ export function Search() {
 
   // Efectos
   const RESULTS_PER_PAGE = 5;
-  const { newUrl, queryParams } = useNewUrl({ filters, currentPage, RESULTS_PER_PAGE });
+  const { newUrl, queryParams } = useNewUrl({
+    filters,
+    currentPage,
+    RESULTS_PER_PAGE,
+  });
   // Set de los filtros en la URL y navegación
   useEffect(() => {
     navigateTo(newUrl);
   }, [newUrl, navigateTo]);
   // Efecto para el fetch
-  useEffect(()=>{
-    async function fetchJobs(){
-      setIsLoading(true)
+  useEffect(() => {
+    async function fetchJobs() {
+      setIsLoading(true);
       try {
-
-        const response = await fetch (`https://jscamp-api.vercel.app/api/jobs?${queryParams}`)
-        const json = await response.json()
-        setJobs (json.data)
-        setTotal (json.total)
-      } 
-      catch (error) {
+        const response = await fetch(
+          `https://jscamp-api.vercel.app/api/jobs?${queryParams}`
+        );
+        const json = await response.json();
+        setJobs(json.data);
+        setTotal(json.total);
+      } catch (error) {
         console.error("Error fetching jobs data:", error);
-      } 
-      finally {
-        setIsLoading(false)
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchJobs();
-  }, [queryParams])
+  }, [queryParams]);
   // Set titulo de la página
   useEffect(() => {
     document.title = `Resultados ${total} - Página ${currentPage} - DevJobs`;
-  }, [total, currentPage])
+  }, [total, currentPage]);
 
   return (
-      <main>
-        <SearchFormSection
-          onChangeFilter={handleChangeFilter}
-          initialFilters={filters}
-        />
-        {
-          isLoading ? <p style={{textAlign: "center"}}>Cargando empleos...</p> : 
+    <main>
+      <SearchFormSection
+        onChangeFilter={handleChangeFilter}
+        initialFilters={filters}
+      />
+      {isLoading ? (
+        <p style={{ textAlign: "center" }}>Cargando empleos...</p>
+      ) : (
         <SearchResultsSection
-        jobsData={jobs}
-        total={total}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-        RESULTS_PER_PAGE={RESULTS_PER_PAGE}
+          jobsData={jobs}
+          total={total}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          RESULTS_PER_PAGE={RESULTS_PER_PAGE}
         />
-      }
-      </main>
+      )}
+    </main>
   );
 }
