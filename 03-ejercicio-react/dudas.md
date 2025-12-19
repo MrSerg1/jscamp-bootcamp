@@ -45,3 +45,5 @@
 ## Ejercicio extra
 
 <!-- Dudas del ejercicio extra -->
+
+¿En la paginación poner currentPage - 1 en href nos pondría /search?page=0 si page es 1 hay algun problema con ello?

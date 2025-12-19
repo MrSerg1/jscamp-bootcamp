@@ -8,6 +8,7 @@ import jobsData from "../data.json";
 import { useState, useEffect } from "react";
 import { useRouter } from "../hooks/useRouter.jsx";
 import { useNewUrl } from "../hooks/useNewUrl.jsx";
+import robot from "../assets/404robot.png";
 
 export function Search() {
   // Estados y router
@@ -47,17 +48,19 @@ export function Search() {
   };
 
   // Efectos
-  // Set de los filtros en la URL
+  const RESULTS_PER_PAGE = 5;
+  const { newUrl, queryParams } = useNewUrl({ filters, currentPage, RESULTS_PER_PAGE });
+  // Set de los filtros en la URL y navegación
   useEffect(() => {
-    const newUrl = useNewUrl({ filters, currentPage });
     navigateTo(newUrl);
-  }, [filters, navigateTo, currentPage]);
+  }, [newUrl, navigateTo]);
   // Efecto para el fetch
   useEffect(()=>{
     async function fetchJobs(){
       setIsLoading(true)
       try {
-        const response = await fetch ("https://jscamp-api.vercel.app/api/jobs")
+
+        const response = await fetch (`https://jscamp-api.vercel.app/api/jobs?${queryParams}`)
         const json = await response.json()
         setJobs (json.data)
         setTotal (json.total)
@@ -70,25 +73,28 @@ export function Search() {
       }
     }
     fetchJobs();
-  }, [])
+  }, [queryParams])
   // Set titulo de la página
   useEffect(() => {
     document.title = `Resultados ${total} - Página ${currentPage} - DevJobs`;
   }, [total, currentPage])
 
   return (
-    <>
       <main>
         <SearchFormSection
           onChangeFilter={handleChangeFilter}
           initialFilters={filters}
         />
+        {
+          isLoading ? <p style={{textAlign: "center"}}>Cargando empleos...</p> : 
         <SearchResultsSection
-          jobsData={jobs}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
+        jobsData={jobs}
+        total={total}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+        RESULTS_PER_PAGE={RESULTS_PER_PAGE}
         />
+      }
       </main>
-    </>
   );
 }

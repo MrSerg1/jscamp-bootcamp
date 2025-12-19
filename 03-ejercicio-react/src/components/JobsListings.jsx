@@ -1,9 +1,9 @@
 import { JobCard } from "./JobCard.jsx";
 
-export function JobListings({jobs}) {
+export function JobListings({jobs, total}) {
   return (
     <>
-      {jobs.length > 0 ? (
+      {total > 0 ? (
         <div className="jobs-listings">
           
           {jobs.map((job) => (

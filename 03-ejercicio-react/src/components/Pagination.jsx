@@ -1,13 +1,13 @@
-export function Pagination({ totalPages, onPageChange, currentPage, jobs }) {
+export function Pagination({ totalPages, onPageChange, currentPage, jobs, total }) {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
+  // Handlers
   const handleBackBtn = (event) => {
     event.preventDefault();
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
     }
   };
-
   const handleNextBtn = (event) => {
     event.preventDefault();
     if (currentPage < totalPages) {
@@ -19,6 +19,7 @@ export function Pagination({ totalPages, onPageChange, currentPage, jobs }) {
     onPageChange(page);
   };
 
+  // Styles
   const styleback = {
     cursor: currentPage === 1 ? "not-allowed" : "pointer",
     opacity: currentPage === 1 ? 0.5 : 1,
@@ -30,10 +31,20 @@ export function Pagination({ totalPages, onPageChange, currentPage, jobs }) {
     pointerEvents: currentPage === totalPages ? "none" : "auto",
   };
 
+  // function to create the href pages
+
+  const builPageUrl = (page) => {
+    const url = new URL(window.location)
+    url.searchParams.set("page", page)
+    return `${url.pathname}?${url.searchParams.toString()}`
+  }
+
+
+
   function PageNumbers() {
     return (
       <nav className="pagination">
-        <a href="#" onClick={handleBackBtn} style={styleback}>
+        <a href={builPageUrl(currentPage -1)} onClick={handleBackBtn} style={styleback}>
           <svg
             width="16"
             height="16"
@@ -52,14 +63,14 @@ export function Pagination({ totalPages, onPageChange, currentPage, jobs }) {
           <a
             key={page}
             data-page={page}
-            href="#"
+            href={builPageUrl(page)}
             className={page === currentPage ? "is-active" : ""}
             onClick={(event) => handlePageClick(event, page)}
           >
             {page}
           </a>
         ))}
-        <a href="#" onClick={handleNextBtn} style={styleNext}>
+        <a href={builPageUrl(currentPage + 1)} onClick={handleNextBtn} style={styleNext}>
           <svg
             width="16"
             height="16"
@@ -81,7 +92,7 @@ export function Pagination({ totalPages, onPageChange, currentPage, jobs }) {
 
   return (
     <>
-    {jobs.length > 0 ? (
+    {total > 0 ? (
         <PageNumbers />
           ) : (
             <></>
