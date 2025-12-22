@@ -56,6 +56,7 @@ export function SearchFormSection({ onChangeFilter, initialFilters }) {
         </div>
 
         <div className="search-filters">
+          {/* genial el uso del name! También se puede usar `useId()`, pero entiendo que para este caso, no hay ningún problema y lo estás asociando a los searchParams, así que estoy de acuerdo como lo hiciste :) */}
           <select 
           name="technology-value" id="filter-technology"
           defaultValue={initialFilters.technology}
