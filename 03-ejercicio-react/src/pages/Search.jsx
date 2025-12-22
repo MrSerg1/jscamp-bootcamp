@@ -47,7 +47,7 @@ export function Search() {
   const { newUrl, queryParams } = useNewUrl({
     filters,
     currentPage,
-    RESULTS_PER_PAGE,
+    resultsPerPage: RESULTS_PER_PAGE,
   });
   // Set de los filtros en la URL y navegación
   useEffect(() => {
