@@ -1,8 +1,8 @@
 import { JobListings } from "./JobsListings.jsx";
 import { Pagination } from "./Pagination.jsx";
 
-export function SearchResultsSection({jobsData, currentPage, onPageChange, total, RESULTS_PER_PAGE}) {
-  const totalPages = Math.ceil(total / RESULTS_PER_PAGE);
+export function SearchResultsSection({jobsData, currentPage, onPageChange, total, resultsPerPage}) {
+  const totalPages = Math.ceil(total / resultsPerPage);
 
   return (
     <section>

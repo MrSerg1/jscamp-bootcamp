@@ -91,7 +91,7 @@ export function Search() {
           total={total}
           currentPage={currentPage}
           onPageChange={handlePageChange}
-          RESULTS_PER_PAGE={RESULTS_PER_PAGE}
+          resultsPerPage={RESULTS_PER_PAGE}
         />
       )}
     </main>
