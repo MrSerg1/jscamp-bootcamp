@@ -1,4 +1,8 @@
-export function useNewUrl({ filters, currentPage, RESULTS_PER_PAGE }) {
+
+// cuando escribimos una variable en mayuscula y separada en `snake_case` es porque es una constante. Aquí hay dos alternativas:
+// 1. pasar `RESULTS_PER_PAGE` a resultsPerPage para mantener la nomenclatura de camelCase en las variables que se pasan por parámetro.
+// 2. Crear un archivo de config con la constante RESULTS_PER_PAGE y usarla en donde sea necesario. Aquí y en el componente Search, sin pasarla como parámetro.
+export function useNewUrl({ filters, currentPage, resultsPerPage }) {
   const params = new URLSearchParams();
   if (filters.search) {
     params.append("text", filters.search);
@@ -15,10 +19,12 @@ export function useNewUrl({ filters, currentPage, RESULTS_PER_PAGE }) {
   if (currentPage > 1) {
     params.append("page", currentPage);
   }
-  if (RESULTS_PER_PAGE) {
-    params.append("limit", RESULTS_PER_PAGE);
+  if (resultsPerPage) {
+    params.append("limit", resultsPerPage);
   }
-  const offset = (currentPage - 1) * RESULTS_PER_PAGE;
+
+  // podemos hacer esto para asegurarnos de que el currentPage nunca sea me
+  const offset = (Math.max(currentPage, 1) - 1) * resultsPerPage;
   params.append("offset", offset);
 
   const queryParams = params.toString();
