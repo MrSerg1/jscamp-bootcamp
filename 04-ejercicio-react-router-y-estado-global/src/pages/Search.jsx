@@ -79,7 +79,7 @@ const useFilters = () => {
       : window.location.pathname
 
     navigateTo(newUrl)
-  }, [filters, currentPage, textToFilter, navigateTo])
+  }, [filters, currentPage, textToFilter])
 
   const totalPages = Math.ceil(total / RESULTS_PER_PAGE)
 
