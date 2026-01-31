@@ -3,7 +3,7 @@
 ## Primera parte
 
 <!-- Dudas de la primera parte del ejercicio -->
-
+¿Por qué con el router manual no se creaba un bucle infinito al poner el navigateTo como dependencia en el fetchJobs pero con el navigateTo de react-router crea un bucle infinito?
 
 ## Segunda parte
 
