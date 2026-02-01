@@ -1,4 +1,5 @@
 import { useId, useState, useRef } from 'react'
+import { useRouter } from '../hooks/useRouter.jsx'
 
 const useSearchForm = ({
   idTechnology,
@@ -74,6 +75,8 @@ export function SearchFormSection({ onTextFilter, onSearch, initialText }) {
     onTextFilter('')
   }
 
+  const searchParams = useRouter().query[0]
+
   return (
     <section className="jobs-search">
       <h1>Encuentra tu próximo trabajo</h1>
@@ -112,7 +115,11 @@ export function SearchFormSection({ onTextFilter, onSearch, initialText }) {
         </div>
 
         <div className="search-filters">
-          <select name={idTechnology} id="filter-technology">
+          <select 
+          name={idTechnology} 
+          id="filter-technology"
+          value={searchParams.get("technology") || ""}
+          >
             <option value="">Tecnología</option>
             <optgroup label="Tecnologías populares">
               <option value="javascript">JavaScript</option>
@@ -130,7 +137,11 @@ export function SearchFormSection({ onTextFilter, onSearch, initialText }) {
             <option value="php">PHP</option>
           </select>
 
-          <select name={idLocation} id="filter-location">
+          <select 
+          name={idLocation} 
+          id="filter-location"
+          value={searchParams.get("type") || ""}
+          >
             <option value="">Ubicación</option>
             <option value="remoto">Remoto</option>
             <option value="cdmx">Ciudad de México</option>
@@ -139,7 +150,11 @@ export function SearchFormSection({ onTextFilter, onSearch, initialText }) {
             <option value="barcelona">Barcelona</option>
           </select>
 
-          <select name={idExperienceLevel} id="filter-experience-level">
+          <select 
+          name={idExperienceLevel} 
+          id="filter-experience-level"
+          value={searchParams.get("level") || ""}
+          >
             <option value="">Nivel de experiencia</option>
             <option value="junior">Junior</option>
             <option value="mid">Mid-level</option>
