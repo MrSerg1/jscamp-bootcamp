@@ -327,6 +327,8 @@ article {
   margin-bottom: 16px;
   border-radius: 0.5rem;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
+ 
+
 
   svg {
     color: var(--primary-light);
@@ -427,5 +429,21 @@ article {
   &.is-applied {
     background: #4caf50;
     pointer-events: none;
+  }
+}
+
+.job-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.link-details {
+  text-decoration: none;
+  color: var(--text-secondary);
+
+  &:hover {
+    color: var(--primary-light);
   }
 }

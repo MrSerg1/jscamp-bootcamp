@@ -20,7 +20,7 @@ Si exploras el código que te hemos dejado, verás que tiene un sistema de enrut
 - En `main.jsx`, importar `BrowserRouter` y envolver la aplicación con él
 - En `App.jsx`, importar `Routes` y `Route` para crear las rutas principales de la app (`/` y `/search`)
 - Modificar el componente `Link` existente para que use internamente el `Link` de React Router. **Importante**: la modificación debe hacerse dentro del componente existente, no reemplazar todas las instancias en la app.
-- Modificar el hook `useRouter` para que use `useNavigate` y `useLocation` de React Router, manteniendo la misma interfaz que ya devolvía
+- Modificar el hook `useRouter` para que use `useNavigate` y `useLocation` de React Router, manteniendo la misma interfaz que ya devolvían
 
 ## Segunda parte | Crear página de Detalles
 

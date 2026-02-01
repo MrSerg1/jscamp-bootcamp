@@ -1,14 +1,17 @@
-import { useState } from 'react'
+import { useState } from "react";
+import { Link } from "./Link.jsx";
 
 export function JobCard({ job }) {
-  const [isApplied, setIsApplied] = useState(false)
+  const [isApplied, setIsApplied] = useState(false);
 
   const handleApplyClick = () => {
-    setIsApplied(true)
-  }
+    setIsApplied(true);
+  };
 
-  const buttonClasses = isApplied ? 'button-apply-job is-applied' : 'button-apply-job'
-  const buttonText = isApplied ? 'Aplicado' : 'Aplicar'
+  const buttonClasses = isApplied
+    ? "button-apply-job is-applied"
+    : "button-apply-job";
+  const buttonText = isApplied ? "Aplicado" : "Aplicar";
 
   return (
     <article
@@ -24,9 +27,14 @@ export function JobCard({ job }) {
         </small>
         <p>{job.descripcion}</p>
       </div>
-      <button className={buttonClasses} onClick={handleApplyClick}>
-        {buttonText}
-      </button>
+      <div className="job-card-actions">
+        <button className={buttonClasses} onClick={handleApplyClick}>
+          {buttonText}
+        </button>
+        <Link to={`/job/${job.id}`} className="link-details">
+          Ver detalles
+        </Link>
+      </div>
     </article>
-  )
+  );
 }

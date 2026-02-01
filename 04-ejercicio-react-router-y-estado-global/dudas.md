@@ -8,6 +8,8 @@
 ## Segunda parte
 
 <!-- Dudas de la segunda parte del ejercicio -->
+¿Por qué se usa el div como un componente de react tipo <div className/> en lugar de <div> dangerouslySetInnerHTML = {{__html: html}} </div>
+
 
 ## Tercera parte
 
