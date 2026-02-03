@@ -118,7 +118,7 @@ export function SearchFormSection({ onTextFilter, onSearch, initialText }) {
           <select 
           name={idTechnology} 
           id="filter-technology"
-          value={searchParams.get("technology") || ""}
+          defaultValue={searchParams.get("technology") || ""}
           >
             <option value="">Tecnología</option>
             <optgroup label="Tecnologías populares">
@@ -140,7 +140,7 @@ export function SearchFormSection({ onTextFilter, onSearch, initialText }) {
           <select 
           name={idLocation} 
           id="filter-location"
-          value={searchParams.get("type") || ""}
+          defaultValue={searchParams.get("type") || ""}
           >
             <option value="">Ubicación</option>
             <option value="remoto">Remoto</option>
@@ -153,7 +153,7 @@ export function SearchFormSection({ onTextFilter, onSearch, initialText }) {
           <select 
           name={idExperienceLevel} 
           id="filter-experience-level"
-          value={searchParams.get("level") || ""}
+          defaultValue={searchParams.get("level") || ""}
           >
             <option value="">Nivel de experiencia</option>
             <option value="junior">Junior</option>

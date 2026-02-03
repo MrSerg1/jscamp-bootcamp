@@ -14,14 +14,17 @@
 ## Tercera parte
 
 <!-- Dudas de la tercera parte del ejercicio -->
-
+¿Es buena practica tener un custom hook para usar react router? 
 ## Cuarta parte
 
 <!-- Dudas de la cuarta parte del ejercicio -->
+¿El suspense sólo se activa cuando se hace una petición fetch? Me refiero a que no veo que se muestre la página de carga al iniciar la aplicación, solo veo que se activa cuando se pide algo a la API. (Baje la carga de datos a 3G)
 
 ## Quinta parte
 
 <!-- Dudas de la quinta parte del ejercicio -->
+
+
 
 ## Sexta parte
 

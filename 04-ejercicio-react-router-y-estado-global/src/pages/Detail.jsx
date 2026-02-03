@@ -3,6 +3,7 @@ import snarkdown from "snarkdown";
 import styles from "./Detail.module.css";
 import { useEffect, useState } from "react";
 import { Link } from "../components/Link.jsx";
+import Waiting from "../components/Waiting.jsx";
 
 function JobSection({ title, content }) {
   const html = snarkdown(content);
@@ -52,7 +53,7 @@ function DetailApplyButton() {
   return <button className={styles.applyButton}>Aplicar ahora</button>;
 }
 
-export function JobDetail() {
+export default function JobDetail() {
   const { params } = useRouter();
   const navigateTo = useRouter();
   const id = params.id;
@@ -79,11 +80,7 @@ export function JobDetail() {
   }, [id]);
   if (loading) {
     return (
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 1rem" }}>
-        <div className={styles.loading}>
-          <p className={styles.loadingText}>Cargando...</p>
-        </div>
-      </div>
+      <Waiting />
     );
   }
    if (error || !job) {
