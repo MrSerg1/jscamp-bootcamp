@@ -3,7 +3,11 @@ import { NavLink } from 'react-router'
 
 export function Link({ href, children, ...restOfProps }) {
   return (
-    <NavLink to={href} {...restOfProps}>
+    <NavLink 
+    className={({ isActive }) => isActive ? 'active-link' : ''}
+    to={href}
+    {...restOfProps}
+    >
       {children}
     </NavLink>
   );

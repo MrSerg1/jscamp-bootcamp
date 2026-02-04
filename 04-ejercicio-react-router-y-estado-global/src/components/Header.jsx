@@ -25,6 +25,7 @@ export function Header() {
         <Link href="/search">Empleos</Link>
 
         <a href="/search">Sin SPA</a>
+        <button className="login-button">Iniciar Sesión</button>
       </nav>
     </header>
   )

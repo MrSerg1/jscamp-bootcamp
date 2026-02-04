@@ -449,3 +449,37 @@ article {
     color: var(--primary-light);
   }
 }
+
+.active-link {
+  font-weight: 700;
+  user-select: none;
+  pointer-events: none;
+  border-bottom: 2px solid var(--primary-light);
+}
+
+.login-button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+  color: white;
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+ 
+.favorite-svg {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+  
+
+  &:hover {
+    color: var(--primary-light);
+  }
+}
