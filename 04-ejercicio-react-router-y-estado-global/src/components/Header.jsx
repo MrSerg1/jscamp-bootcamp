@@ -1,6 +1,18 @@
 import { Link } from './Link'
+import { useAuthStore } from '../store/authStore.js'
+
 
 export function Header() {
+  const LoginButton = () => {
+    const { isLoggedIn, login, logout } = useAuthStore()
+
+    return (
+    isLoggedIn 
+    ? <button className="login-button" onClick={logout}>Cerrar Sesión</button>
+    : <button className="login-button" onClick={login}>Iniciar Sesión</button>
+  
+  )
+  }
   return (
     <header>
       <Link href="/" style={{ textDecoration: 'none' }}>
@@ -25,7 +37,8 @@ export function Header() {
         <Link href="/search">Empleos</Link>
 
         <a href="/search">Sin SPA</a>
-        <button className="login-button">Iniciar Sesión</button>
+        <LoginButton />
+        
       </nav>
     </header>
   )

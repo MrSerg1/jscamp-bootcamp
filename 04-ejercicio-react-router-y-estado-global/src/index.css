@@ -471,15 +471,21 @@ article {
   transition: all 0.2s;
 }
  
-.favorite-svg {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-secondary);
-  transition: color 0.2s;
-  
+.button-favorite {
+ background-color: transparent;
+ background: transparent;
+ padding: 0px;
+ border: none;
+ outline: none;
+ width: 24px;
+  height: 24px;
+}
 
-  &:hover {
-    color: var(--primary-light);
-  }
+.favorite-svg {
+  background-color: transparent;
+  background: transparent;
+  padding: 0px;
+  outline: none;
+  width: 24px;
+  height: 24px;
 }

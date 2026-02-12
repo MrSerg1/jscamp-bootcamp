@@ -29,3 +29,6 @@
 ## Sexta parte
 
 <!-- Dudas de la sexta parte del ejercicio -->
+
+¿Por qué se usa [...state.favorites, jobId] en lugar de push para agregar el id a la lista? ¿Es porque push no crea un nuevo array? ¿Por qué se necesita crear un nuevo array, para avisarle a react y re-renderice?
+Tengo la misma duda con el removeFavorite por que no usar el metodo .splice() en lugar de filtrar. 

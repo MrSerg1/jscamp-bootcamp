@@ -1,9 +1,11 @@
 import { useRouter } from "../hooks/useRouter.jsx";
-import snarkdown from "snarkdown";
-import styles from "./Detail.module.css";
-import { useEffect, useState } from "react";
 import { Link } from "../components/Link.jsx";
+import { useEffect, useState } from "react";
+import { ApplyButton } from "../components/Applybtn.jsx";
+
 import Waiting from "../components/Waiting.jsx";
+import styles from "./Detail.module.css";
+import snarkdown from "snarkdown";
 
 function JobSection({ title, content }) {
   const html = snarkdown(content);
@@ -44,14 +46,11 @@ function DetailPageHeader({ job }) {
         </p>
       </header>
 
-      <DetailApplyButton />
+      <ApplyButton />
     </>
   );
 }
 
-function DetailApplyButton() {
-  return <button className={styles.applyButton}>Aplicar ahora</button>;
-}
 
 export default function JobDetail() {
   const { params } = useRouter();
