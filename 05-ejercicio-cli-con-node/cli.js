@@ -1,18 +1,14 @@
 import { readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
 
-// Aquí irá el código
-
+try {
 const directoryPath = process.argv[2] ?? ".";
-const userOrder = process.argv[3] ?? "";
 const args = process.argv.slice(2);
 
 const isAsc = args.includes("--asc");
 const isDesc = args.includes("--desc");
 const onlyFiles = args.includes("--files");
 const onlyFolders = args.includes("--folders");
-
-console.log("Arguments:", args);
 
 const formatBytes = (bytes) => {
   if (bytes < 1024) {
@@ -25,8 +21,10 @@ const formatBytes = (bytes) => {
 
 const files = await readdir(directoryPath);
 
+
 const entries = await Promise.all(
-  files.map(async (file) => {
+  files.map(
+    async (file) => {
     const filePath = join(directoryPath, file);
     const fileStat = await stat(filePath);
     return {
@@ -34,8 +32,7 @@ const entries = await Promise.all(
       size: formatBytes(fileStat.size),
       isDirectory: fileStat.isDirectory(),
     };
-  }),
-);
+  }));
 // Calcular el ancho máximo del nombre para alinear la salida
 const maxName = entries.reduce(
   (max, entry) => Math.max(max, entry.name.length),
@@ -63,3 +60,15 @@ for (const entry of filteredEntries) {
   const size = entry.isDirectory ? "-" : ` ${entry.size}`;
   console.log(`${icon}  ${entry.name.padEnd(maxName + 5)} ${size}`);
 }
+} catch (error) {
+    if (error.code === "EACCES") {
+        console.error("No tienes permisos para acceder a este directorio.");
+    }
+        else if (error.code === "ENOENT") {
+            console.error("El directorio no existe.");
+        } else {
+            console.error("Error al leer el directorio:", error.message);
+        }
+    process.exit(1);
+}
+
