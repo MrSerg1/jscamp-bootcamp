@@ -5,6 +5,14 @@ import { join } from "node:path";
 
 const directoryPath = process.argv[2] ?? ".";
 const userOrder = process.argv[3] ?? "";
+const args = process.argv.slice(2);
+
+const isAsc = args.includes("--asc");
+const isDesc = args.includes("--desc");
+const onlyFiles = args.includes("--files");
+const onlyFolders = args.includes("--folders");
+
+console.log("Arguments:", args);
 
 const formatBytes = (bytes) => {
   if (bytes < 1024) {
@@ -34,13 +42,23 @@ const maxName = entries.reduce(
   0,
 );
 
-if (userOrder === "--asc") {
+if (isAsc) {
   entries.sort((a, b) => a.name.localeCompare(b.name));
-} else if (userOrder === "--desc") {
+} else if (isDesc) {
   entries.sort((a, b) => b.name.localeCompare(a.name));
 }
 
-for (const entry of entries) {
+let filteredEntries = entries;
+
+if (onlyFiles) {
+  filteredEntries = entries.filter((entry) => !entry.isDirectory);
+} else if (onlyFolders) {
+  filteredEntries = entries.filter((entry) => entry.isDirectory);
+}
+
+
+
+for (const entry of filteredEntries) {
   const icon = entry.isDirectory ? "📁" : "📄";
   const size = entry.isDirectory ? "-" : ` ${entry.size}`;
   console.log(`${icon}  ${entry.name.padEnd(maxName + 5)} ${size}`);
