@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useLocation, useParams, useSearchParams } from 'react-router'
 
 export function useRouter() {
@@ -8,9 +8,7 @@ export function useRouter() {
   const params = useParams()
   const query  = useSearchParams()
 
-  function navigateTo(path) {
-    navigate(path)
-  }
+  const navigateTo = useCallback((path) => navigate(path), [navigate])
 
   return {
     currentPath,
