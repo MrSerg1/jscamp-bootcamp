@@ -39,6 +39,7 @@ const useSearchForm = ({
       clearTimeout(timeoutId.current)
     }
 
+    // Excelente manera de hacerlo!
     timeoutId.current = setTimeout(() => {
       onTextFilter(text)
     }, 500)
