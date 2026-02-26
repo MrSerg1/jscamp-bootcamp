@@ -53,8 +53,7 @@ function DetailPageHeader({ job }) {
 
 
 export default function JobDetail() {
-  const { params } = useRouter();
-  const navigateTo = useRouter();
+  const { params, navigateTo } = useRouter(); // Estabas llamando dos veces al mismo hook. Cuando usaste `navigateTo` te faltaron los corchetes para desestructurar el objeto y obtener el navigateTo. En resumen, estabas usando el objeto completo en lugar de usar solo la propiedad navigateTo.
   const id = params.id;
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -76,7 +75,7 @@ export default function JobDetail() {
           setLoading(false);
         });
     });
-  }, [id]);
+  }, [id, navigateTo]);
   if (loading) {
     return (
       <Waiting />

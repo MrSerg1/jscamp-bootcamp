@@ -23,8 +23,8 @@ const useFilters = () => {
     return searchParams.get("text") || "";
   });
   const [currentPage, setCurrentPage] = useState(() => {
-    const page = Number(searchParams.get("page"));
-    return Number.isNaN(page) ? page : 1;
+    const page = Number(searchParams.get("page") || 1); // page es null, y al transformarlo en Number da como resultado 0. Por eso ponemos || 1
+    return Number.isNaN(page) ? 1 : page; // Es al revez, si no es un número, retorna 1
   });
 
   const [jobs, setJobs] = useState([]);
@@ -67,19 +67,22 @@ const useFilters = () => {
   }, [filters, currentPage, textToFilter]);
 
   useEffect(() => {
-    setSearchParams((params)=>{
-    if (textToFilter) params.set("text", textToFilter);
-    else params.delete("text");
-    if (filters.technology) params.set("technology", filters.technology);
-    else params.delete("technology");
-    if (filters.location) params.set("type", filters.location);
-    else params.delete("type");
-    if (filters.experienceLevel)
-      params.set("level", filters.experienceLevel);
-    else params.delete("level");
-    if (currentPage > 1) params.set("page", currentPage);
     
-    return params })
+    setSearchParams((params)=>{
+      // Para simplificar tanto if/else, podemos hacer una función que ahorre este trabajo. Lo que hiciste está genial si? Es para mostrar otra manera :)
+      const setParamIfExist = (param, value) => {
+        if(value) params.set(param, value);
+        else params.delete(param);
+      }
+      
+      setParamIfExist("text", textToFilter);
+      setParamIfExist("technology", filters.technology);
+      setParamIfExist("type", filters.location);
+      setParamIfExist("level", filters.experienceLevel);
+      setParamIfExist("page", currentPage > 1 ? currentPage : undefined);
+
+      return params
+    })
   }, [filters, currentPage, textToFilter]);
 
   const totalPages = Math.ceil(total / RESULTS_PER_PAGE);
