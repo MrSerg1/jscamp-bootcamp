@@ -40,21 +40,19 @@ const server = createServer(async (req, res) => {
       
       // Filtro por nombre
       
+      /* Antes con el `if` se repetían muchas operaciones. Podemos simplificar eso haciendo lo siguiente: */
       const nameFilter = searchParams.get("name");
-      if (nameFilter) {
-        let filteredUsers = users.filter(user => user.name.toLowerCase().includes(nameFilter.toLowerCase()));
-        filteredUsers = ageFilter(filteredUsers, minAgeFilter, maxAgeFilter);
-        const finalUsers = pagination(filteredUsers, offset, limit);
-        return sendJson(res, 200, finalUsers);
-      }
+      let filteredUsers = nameFilter
+        ? users.filter(user => user.name.toLowerCase().includes(nameFilter.toLowerCase()))
+        : users;
 
       // Filtro por edad
       
-      const filteredUsers = ageFilter(users, minAgeFilter, maxAgeFilter);
+      filteredUsers = ageFilter(filteredUsers, minAgeFilter, maxAgeFilter);
 
       // Aplicar paginación
-      const paginatedUsers = pagination(filteredUsers, offset, limit);
-      return sendJson(res, 200, paginatedUsers);
+      filteredUsers = pagination(filteredUsers, offset, limit);
+      return sendJson(res, 200, filteredUsers);
       
     }
   }
