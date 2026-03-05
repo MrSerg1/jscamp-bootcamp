@@ -2,6 +2,34 @@ import { Router } from 'express'
 
 export const jobsRouter = Router()
 
+jobsRouter.get('/', (req, res) => {
+   return res.json({ message: 'Obtener todos los jobs' })   
+})
+
+jobsRouter.get('/:id', (req, res) => {
+    const { id } = req.params
+    return res.json({ message: `Obtener un job por id: ${id}` })   
+})
+
+jobsRouter.post('/', (req, res) => {
+    return res.json({ message: 'Crear un job' })
+})
+
+jobsRouter.put('/:id', (req, res) => {
+    const { id } = req.params
+    return res.json({ message: `Actualizar un job por id: ${id}` })
+})
+
+jobsRouter.patch('/:id', (req, res) => {
+    const { id } = req.params
+    return res.json({ message: `Actualizar parcialmente un job por id: ${id}` })
+})
+
+jobsRouter.delete('/:id', (req, res) => {
+    const { id } = req.params
+    return res.json({ message: `Eliminar un job por id: ${id}` })
+})
+
 /* Aquí debe ir la lógica de tus rutas */
 /* Recuerda que en tus rutas debes usar los controladores */
 /* 

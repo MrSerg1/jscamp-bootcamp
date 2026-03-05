@@ -90,8 +90,7 @@ Aquí conectarás las rutas con los controladores.
 
 ### 4. Config (`config.js`)
 
-Crea un archivo de configuración con constantes por defecto:
-
+Crea un archivo de configuración con constantes por default
 ```js
 export const DEFAULTS = {
   LIMIT_PAGINATION: 10,
