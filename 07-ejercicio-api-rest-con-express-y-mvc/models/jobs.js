@@ -1,4 +1,85 @@
-import jobs from '../jobs.json' with { type: 'json' }
+import jobs from "../jobs.json" with { type: "json" };
 
 /* Aquí deberá ir la lógica de tu modelo */
 /* Recuerda que el modelo SOLO debe manejar la lógica de los datos, en este caso nuestro JSON */
+
+export class JobModel {
+
+  static async getAll({
+    title,
+    text,
+    level,
+    technology,
+    limit,
+    offset,
+  }) {
+    const limitNumber = Number(limit);
+    const offsetNumber = Number(offset);
+    let filteredJobs = jobs;
+
+    if (title) {
+     const searchTitle = title.toLowerCase();
+     filteredJobs = filteredJobs.filter((job)=>
+    job.titulo.toLowerCase().includes(searchTitle)
+    )
+    }
+
+    if (text) {
+      const searchText = text.toLowerCase();
+      filteredJobs = filteredJobs.filter(
+        (job) =>
+          job.titulo.toLowerCase().includes(searchText) ||
+          job.descripcion.toLowerCase().includes(searchText),
+      );
+    }
+
+    if (level) {
+      const searchLevel = level.toLowerCase();
+      filteredJobs = filteredJobs.filter((job) => job.data.nivel.includes(searchLevel))
+    }
+
+    if (technology) {
+        const searchTechnology = technology.toLowerCase();
+        filteredJobs = filteredJobs.filter((job)=>job.data.technology.includes(searchTechnology))
+    }
+
+    const paginatedJobs = filteredJobs.slice(offsetNumber, offsetNumber + limitNumber)
+
+    return { paginatedJobs, limitNumber, offsetNumber };
+  }
+
+  static async getJobById(id) {
+    const job = jobs.find((job) => job.id === id);
+    return job || null;
+  }
+
+  static async createJob(job) {
+    const newJob = {
+      id: jobs.length + 1,
+      ...job,
+    };
+    jobs.push(newJob);
+    return newJob;
+  }
+
+  updateJobById(id, job) {
+    const index = jobs.findIndex((job) => job.id === id);
+    if (index === -1) return null;
+    jobs[index] = { id, ...job };
+    return jobs[index];
+  }
+
+  updatePartialJobById(id, job) {
+    const index = jobs.findIndex((job) => job.id === id);
+    if (index === -1) return null;
+    jobs[index] = { ...jobs[index], ...job };
+    return jobs[index];
+  }
+
+  deleteJobById(id) {
+    const index = jobs.findIndex((job) => job.id === id);
+    if (index === -1) return null;
+    const deletedJob = jobs.splice(index, 1);
+    return deletedJob[0];
+  }
+}

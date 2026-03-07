@@ -1,15 +1,10 @@
 import { Router } from 'express'
+import { JobsController } from '../controllers/jobs.js'
 
 export const jobsRouter = Router()
 
-jobsRouter.get('/', (req, res) => {
-   return res.json({ message: 'Obtener todos los jobs' })   
-})
-
-jobsRouter.get('/:id', (req, res) => {
-    const { id } = req.params
-    return res.json({ message: `Obtener un job por id: ${id}` })   
-})
+jobsRouter.get('/', JobsController.getAll)
+jobsRouter.get('/:id',JobsController.getJobById)
 
 jobsRouter.post('/', (req, res) => {
     return res.json({ message: 'Crear un job' })
