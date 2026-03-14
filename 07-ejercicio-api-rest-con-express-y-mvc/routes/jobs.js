@@ -6,9 +6,7 @@ export const jobsRouter = Router()
 jobsRouter.get('/', JobsController.getAll)
 jobsRouter.get('/:id',JobsController.getJobById)
 
-jobsRouter.post('/', (req, res) => {
-    return res.json({ message: 'Crear un job' })
-})
+jobsRouter.post('/', JobsController.createJob)
 
 jobsRouter.put('/:id', (req, res) => {
     const { id } = req.params

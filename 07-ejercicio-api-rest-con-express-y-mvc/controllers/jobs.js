@@ -34,14 +34,35 @@ export class JobsController {
     const jobById = await JobModel.getJobById(id);
 
     if (!jobById) {
-      return res.status(404).json({ message: "Trabajo no encontrado" });
+      return res.status(404).json({ "error": "Job not found" });
     }
 
     return res.json(jobById);
   }
 
   static async createJob(req, res) {
-    return res.json({ message: "Crear un job" });
+    const { titulo, 
+      empresa, 
+      ubicacion, 
+      descripcion,
+      data,
+      content,
+    } = req.body;
+
+    if (!titulo || !empresa || !ubicacion || !descripcion || !data || !content) {
+      return res.status(400).json({ message: "Faltan campos obligatorios" });
+    }
+
+    const newJob = await JobModel.createJob({
+      titulo,
+      empresa,
+      ubicacion,
+      descripcion,
+      data,
+      content,
+    });
+
+    return res.status(201).json(newJob);
   }
 
   static async updateJobById(req, res) {

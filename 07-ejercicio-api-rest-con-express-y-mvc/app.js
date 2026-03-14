@@ -8,6 +8,7 @@ const PORT = process.env.PORT ?? DEFAULTS.PORT
 const app = express()
 
 app.use(cors())
+app.use(express.json())
 app.use('/jobs', jobsRouter)
 
 app.listen(PORT, () => {

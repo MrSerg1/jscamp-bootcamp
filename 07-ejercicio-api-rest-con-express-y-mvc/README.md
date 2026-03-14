@@ -342,9 +342,15 @@ curl "http://localhost:1234/jobs?limit=20&offset=10"
 curl http://localhost:1234/jobs/1
 
 # POST - Crear job
-curl -X POST http://localhost:1234/jobs \
+curl -X POST http://localhost:3000/jobs \
   -H "Content-Type: application/json" \
-  -d '{"titulo":"Full Stack Developer","empresa":"TechStart","ubicacion":"Valencia","data":{"descripcion":"Desarrollador full stack","tecnologias":["react","node"]}}'
+  -d '{"titulo":"Full Stack Developer","empresa":"TechStart","ubicacion":"Valencia","descripcion": "Buscamos un ingeniero DevOps con experiencia en contenedores y orquestación.", "data":{"descripcion":"Desarrollador full stack","tecnologias":["react","node"]}, "content":{
+    "description": "CloudTech está buscando un Ingeniero DevOps...",
+    "responsibilities": "- Gestionar infraestructura cloud...",
+    "requirements": "- Experiencia con Docker y Kubernetes...",
+    "about": "CloudTech es una empresa líder en soluciones cloud..."
+  }
+  }'
 ```
 
 ### Con herramientas gráficas

@@ -1,27 +1,20 @@
 import jobs from "../jobs.json" with { type: "json" };
+import randoUUID from "node:crypto";
 
 /* Aquí deberá ir la lógica de tu modelo */
 /* Recuerda que el modelo SOLO debe manejar la lógica de los datos, en este caso nuestro JSON */
 
 export class JobModel {
-
-  static async getAll({
-    title,
-    text,
-    level,
-    technology,
-    limit,
-    offset,
-  }) {
+  static async getAll({ title, text, level, technology, limit, offset }) {
     const limitNumber = Number(limit);
     const offsetNumber = Number(offset);
     let filteredJobs = jobs;
 
     if (title) {
-     const searchTitle = title.toLowerCase();
-     filteredJobs = filteredJobs.filter((job)=>
-    job.titulo.toLowerCase().includes(searchTitle)
-    )
+      const searchTitle = title.toLowerCase();
+      filteredJobs = filteredJobs.filter((job) =>
+        job.titulo.toLowerCase().includes(searchTitle),
+      );
     }
 
     if (text) {
@@ -35,15 +28,22 @@ export class JobModel {
 
     if (level) {
       const searchLevel = level.toLowerCase();
-      filteredJobs = filteredJobs.filter((job) => job.data.nivel.includes(searchLevel))
+      filteredJobs = filteredJobs.filter((job) =>
+        job.data.nivel.includes(searchLevel),
+      );
     }
 
     if (technology) {
-        const searchTechnology = technology.toLowerCase();
-        filteredJobs = filteredJobs.filter((job)=>job.data.technology.includes(searchTechnology))
+      const searchTechnology = technology.toLowerCase();
+      filteredJobs = filteredJobs.filter((job) =>
+        job.data.technology.includes(searchTechnology),
+      );
     }
 
-    const paginatedJobs = filteredJobs.slice(offsetNumber, offsetNumber + limitNumber)
+    const paginatedJobs = filteredJobs.slice(
+      offsetNumber,
+      offsetNumber + limitNumber,
+    );
 
     return { paginatedJobs, limitNumber, offsetNumber };
   }
@@ -53,10 +53,22 @@ export class JobModel {
     return job || null;
   }
 
-  static async createJob(job) {
+  static async createJob({
+    titulo,
+    empresa,
+    ubicacion,
+    descripcion,
+    data,
+    content,
+  }) {
     const newJob = {
-      id: jobs.length + 1,
-      ...job,
+      id: randoUUID.randomUUID(),
+      titulo: titulo,
+      empresa: empresa,
+      ubicacion: ubicacion,
+      descripcion: descripcion,
+      data: data,
+      content: content,
     };
     jobs.push(newJob);
     return newJob;
