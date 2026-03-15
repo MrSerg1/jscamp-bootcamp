@@ -8,10 +8,7 @@ jobsRouter.get('/:id',JobsController.getJobById)
 
 jobsRouter.post('/', JobsController.createJob)
 
-jobsRouter.put('/:id', (req, res) => {
-    const { id } = req.params
-    return res.json({ message: `Actualizar un job por id: ${id}` })
-})
+jobsRouter.put('/:id', JobsController.updateJobById)
 
 jobsRouter.patch('/:id', (req, res) => {
     const { id } = req.params

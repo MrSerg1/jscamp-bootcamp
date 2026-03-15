@@ -74,11 +74,21 @@ export class JobModel {
     return newJob;
   }
 
-  updateJobById(id, job) {
+  static async updateJobById({id, titulo, empresa, ubicacion, descripcion, data, content}) {
     const index = jobs.findIndex((job) => job.id === id);
     if (index === -1) return null;
-    jobs[index] = { id, ...job };
-    return jobs[index];
+    
+    const updatedJob = {
+      id,
+      titulo,
+      empresa,
+      ubicacion,
+      descripcion,
+      data,
+      content,
+    };
+    jobs[index] = updatedJob;
+    return updatedJob;
   }
 
   updatePartialJobById(id, job) {
