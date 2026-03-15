@@ -93,9 +93,14 @@ export class JobsController {
 
   static async updatePartialJobById(req, res) {
     const { id } = req.params;
-    return res.json({
-      message: `Actualizar parcialmente un job por id: ${id}`,
-    });
+    const {titulo, empresa, ubicacion, descripcion, data, content } = req.body;
+    const jobUpdated = await JobModel.updatePartialJobById({ id, titulo, empresa, ubicacion, descripcion, data, content });
+
+    if (!jobUpdated) {
+      return res.status(404).json({ "error": "Job not found" });
+    };
+    
+    return res.json(jobUpdated);
   }
 
   static async deleteJobById(req, res) {
