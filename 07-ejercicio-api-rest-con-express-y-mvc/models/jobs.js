@@ -1,8 +1,10 @@
-import jobs from "../jobs.json" with { type: "json" };
+import jobsData from "../jobs.json" with { type: "json" };
 import randoUUID from "node:crypto";
 
 /* Aquí deberá ir la lógica de tu modelo */
 /* Recuerda que el modelo SOLO debe manejar la lógica de los datos, en este caso nuestro JSON */
+
+let jobs = jobsData;
 
 export class JobModel {
   static async getAll({ title, text, level, technology, limit, offset }) {
@@ -16,7 +18,6 @@ export class JobModel {
         job.titulo.toLowerCase().includes(searchTitle),
       );
     }
-
     if (text) {
       const searchText = text.toLowerCase();
       filteredJobs = filteredJobs.filter(
@@ -25,14 +26,12 @@ export class JobModel {
           job.descripcion.toLowerCase().includes(searchText),
       );
     }
-
     if (level) {
       const searchLevel = level.toLowerCase();
       filteredJobs = filteredJobs.filter((job) =>
         job.data.nivel.includes(searchLevel),
       );
     }
-
     if (technology) {
       const searchTechnology = technology.toLowerCase();
       filteredJobs = filteredJobs.filter((job) =>
@@ -74,10 +73,18 @@ export class JobModel {
     return newJob;
   }
 
-  static async updateJobById({id, titulo, empresa, ubicacion, descripcion, data, content}) {
+  static async updateJobById({
+    id,
+    titulo,
+    empresa,
+    ubicacion,
+    descripcion,
+    data,
+    content,
+  }) {
     const index = jobs.findIndex((job) => job.id === id);
     if (index === -1) return null;
-    
+
     const updatedJob = {
       id,
       titulo,
@@ -91,8 +98,15 @@ export class JobModel {
     return updatedJob;
   }
 
-  static async updatePartialJobById({ id, titulo, empresa, ubicacion, descripcion, data, content }) {
-
+  static async updatePartialJobById({
+    id,
+    titulo,
+    empresa,
+    ubicacion,
+    descripcion,
+    data,
+    content,
+  }) {
     const job = { titulo, empresa, ubicacion, descripcion, data, content };
 
     const index = jobs.findIndex((job) => job.id === id);
@@ -104,10 +118,11 @@ export class JobModel {
     return jobs[index];
   }
 
-  deleteJobById(id) {
-    const index = jobs.findIndex((job) => job.id === id);
-    if (index === -1) return null;
-    const deletedJob = jobs.splice(index, 1);
-    return deletedJob[0];
+  static async deleteJobById(id) {
+    jobs = jobs.filter((job) => job.id !== id);
+    if (jobs.length !== jobsData.length) {
+      return true;
+    }
+    return false;
   }
 }

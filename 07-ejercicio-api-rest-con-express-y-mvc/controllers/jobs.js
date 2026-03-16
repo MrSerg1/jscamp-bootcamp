@@ -99,12 +99,17 @@ export class JobsController {
     if (!jobUpdated) {
       return res.status(404).json({ "error": "Job not found" });
     };
-    
+
     return res.json(jobUpdated);
   }
 
   static async deleteJobById(req, res) {
+
     const { id } = req.params;
-    return res.json({ message: `Eliminar un job por id: ${id}` });
+    
+    const deletedJob = await JobModel.deleteJobById(id);
+    const statusCode = deletedJob ? 200 : 204;
+    
+    return res.status(statusCode).send();
   }
 }
