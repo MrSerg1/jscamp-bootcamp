@@ -14,3 +14,4 @@ o hacer lo anterior es mala práctica?
 
 4) Note que cuando hago cambios en la api hay veces que se cae el servidor si lo tengo levantado y aún con la bandera --watch no es capaz de volver a levantarse, para trabajar en el servidor y evitar que esto pase debería poner el código que voy a trabajar dentro de un if?
 
+5) puedo dejar en origenes aceptados origin undefined? para poder mejorar la experiencia de desarrollo?
