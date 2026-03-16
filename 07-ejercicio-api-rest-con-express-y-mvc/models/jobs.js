@@ -12,32 +12,35 @@ export class JobModel {
     const offsetNumber = Number(offset);
     let filteredJobs = jobs;
 
-    if (title) {
-      const searchTitle = title.toLowerCase();
-      filteredJobs = filteredJobs.filter((job) =>
-        job.titulo.toLowerCase().includes(searchTitle),
-      );
-    }
-    if (text) {
-      const searchText = text.toLowerCase();
-      filteredJobs = filteredJobs.filter(
-        (job) =>
-          job.titulo.toLowerCase().includes(searchText) ||
-          job.descripcion.toLowerCase().includes(searchText),
-      );
-    }
-    if (level) {
-      const searchLevel = level.toLowerCase();
-      filteredJobs = filteredJobs.filter((job) =>
-        job.data.nivel.includes(searchLevel),
-      );
-    }
-    if (technology) {
-      const searchTechnology = technology.toLowerCase();
-      filteredJobs = filteredJobs.filter((job) =>
-        job.data.technology.includes(searchTechnology),
-      );
-    }
+    const filters = [
+      {
+        active: title,
+        check: (j) => j.titulo.toLowerCase().includes(title.toLowerCase()),
+      },
+      {
+        active: text,
+        check: (j) =>
+          j.titulo.toLowerCase().includes(text.toLowerCase()) ||
+          j.descripcion.toLowerCase().includes(text.toLowerCase()),
+      },
+      {
+        active: level,
+        check: (j) => j.data.nivel.toLowerCase().includes(level.toLowerCase()),
+      },
+      {
+        active: technology,
+        check: (j) =>
+          j.data.technology.some(
+            (t) => t.toLowerCase() === technology.toLowerCase(),
+          ),
+      },
+    ];
+
+    filteredJobs = filteredJobs.filter(job => {
+      return filters //Regresa el array de filtros
+        .filter(f => f.active) // Solo consideramos los filtros que están activos
+        .every(f => f.check(job)); // El job debe pasar todos los filtros activos para ser incluido
+    });
 
     const paginatedJobs = filteredJobs.slice(
       offsetNumber,
