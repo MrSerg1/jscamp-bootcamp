@@ -122,10 +122,11 @@ export class JobModel {
   }
 
   static async deleteJobById(id) {
+    //Guardamos longitud inicial
+    const initialLength = jobs.length;
+    //Filtramos el array de jobs para eliminar el job con el id dado
     jobs = jobs.filter((job) => job.id !== id);
-    if (jobs.length !== jobsData.length) {
-      return true;
-    }
-    return false;
+    //Si la longitud del array después de filtrar es igual a la longitud inicial, significa que no se eliminó ningún job (porque no se encontró el id)
+    return jobs.length !== initialLength;
   }
 }
