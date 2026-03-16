@@ -1,18 +1,22 @@
-import cors from 'cors'
+import cors from "cors";
 
 const ACCEPTED_ORIGINS = [
-    'http://localhost:5173',
-]
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "http://localhost:1234",
+  "http://jscamp.dev",
+  "https://midu.dev",
+];
 
 export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) => {
   return cors({
     origin: (origin, callback) => {
-        console.log('Origin:', origin)
+      console.log("Origin:", origin);
       if (ACCEPTED_ORIGINS.includes(origin)) {
-        callback(null, true)
+        callback(null, true);
       } else {
-        callback(new Error('Origen no permitido por CORS'))
+        callback(new Error("Origen no permitido por CORS"));
       }
-    }
-  })
-}
+    },
+  });
+};
