@@ -1,65 +1,79 @@
-import { JobModel } from "../models/job.js"
-import { DEFAULTS } from "../config.js"
+import { JobModel } from "../models/job.js";
+import { DEFAULTS } from "../config.js";
 
 export class JobController {
-    static async getAll(req, res){
+  static async getAll(req, res) {
+    const {
+      text,
+      technology,
+      type,
+      level,
+      limit = DEFAULTS.LIMIT_PAGINATION,
+      offset = DEFAULTS.OFFSET_PAGINATION,
+    } = req.query;
 
-        const { text, technology, type, level, limit = DEFAULTS.LIMIT_PAGINATION, offset = DEFAULTS.OFFSET_PAGINATION } = req.query
+    const { paginatedJobs, limitNumber, offsetNumber } = await JobModel.getAll({
+      text,
+      technology,
+      type,
+      level,
+      limit,
+      offset,
+    });
 
-        const { paginatedJobs, limitNumber, offsetNumber } = await JobModel.getAll({ text, technology, type, level, limit, offset }) 
+    return res.json({
+      data: paginatedJobs,
+      total: paginatedJobs.length,
+      limit: limitNumber,
+      offset: offsetNumber,
+    });
+  }
 
-        return res.json({ data: paginatedJobs, total: paginatedJobs.length, limit: limitNumber, offset: offsetNumber})
-    }
+  static async getId(req, res) {
+    const { id } = req.params;
 
-    static async getId(req, res){
+    const { status, job } = await JobModel.getId(id);
 
-        const { id } = req.params
+    return res.status(status).json(job);
+  }
 
-        const {status, job} = await JobModel.getId(id)
-        
-        return res.status(status).json(job)
-    }
+  static async create(req, res) {
+    const { titulo, empresa, ubicacion, descripcion, data } = req.body;
 
-    static async create(req, res){
-        
-        const { titulo, empresa, ubicacion, descripcion, data } = req.body
+    const { status, newJob } = await JobModel.create({
+      titulo,
+      empresa,
+      ubicacion,
+      descripcion,
+      data,
+    });
 
-        const {status, newJob} = await JobModel.create({ titulo, empresa, ubicacion, descripcion, data })
-        
-        return res.status(status).json(newJob)
-    }
+    return res.status(status).json(newJob);
+  }
 
-    static async update(req, res){
+  static async update(req, res) {
+    const { id } = req.params;
+    const sentJob = req.body;
 
-        const { id } = req.params
-        const sentJob = req.body
+    const { status, error } = await JobModel.update({ id, sentJob });
 
-        const { status, error } = await JobModel.update({ id, sentJob })
-        
-        return error
-            ? res.status(status).json(error)
-            : res.status(status).send()
-    }
+    return error ? res.status(status).json(error) : res.status(status).send();
+  }
 
-    static async partialUpdate(req, res){
-        const { id } = req.params
-        const sentJob = req.body
+  static async partialUpdate(req, res) {
+    const { id } = req.params;
+    const sentJob = req.body;
 
-        const { status, error } = await JobModel.partialUpdate({ id, sentJob })
-        
-        return error
-            ? res.status(status).json(error)
-            : res.status(status).send()
-    }
+    const { status, error } = await JobModel.partialUpdate({ id, sentJob });
 
-    static async delete(req, res){
+    return error ? res.status(status).json(error) : res.status(status).send();
+  }
 
-        const { id } = req.params
-        
-        const { status, error } = await JobModel.delete(id)
+  static async delete(req, res) {
+    const { id } = req.params;
 
-        return error
-            ? res.status(status).json(error)
-            : res.status(status).send()
-    }
+    const { status, error } = await JobModel.delete(id);
+
+    return error ? res.status(status).json(error) : res.status(status).send();
+  }
 }
