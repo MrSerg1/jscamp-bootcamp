@@ -38,7 +38,7 @@ export class JobController {
   }
 
   static async create(req, res) {
-    const { titulo, empresa, ubicacion, descripcion, data } = req.body;
+    const { titulo, empresa, ubicacion, descripcion, data, content } = req.body;
 
     const { status, newJob } = await JobModel.create({
       titulo,
@@ -46,6 +46,7 @@ export class JobController {
       ubicacion,
       descripcion,
       data,
+      content,
     });
 
     return res.status(status).json(newJob);

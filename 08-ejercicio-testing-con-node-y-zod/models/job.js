@@ -44,7 +44,7 @@ export class JobModel {
     return output
   }
 
-  static async create({ titulo, empresa, ubicacion, descripcion, data }) {
+  static async create({ titulo, empresa, ubicacion, descripcion, data, content }) {
 
     const output = {
       status: 201,
@@ -54,7 +54,8 @@ export class JobModel {
         empresa,
         ubicacion,
         descripcion,
-        data
+        data,
+        content,
       }
     }
 

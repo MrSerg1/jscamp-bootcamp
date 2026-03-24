@@ -9,11 +9,16 @@ const jobSchema = z.object({
     empresa: z.string('La empresa es obligatoria').min(2, 'La empresa debe tener al menos 2 caracteres').max(50, 'La empresa no puede tener más de 50 caracteres'),
     ubicacion: z.string('La ubicación es obligatoria').min(2, 'La ubicación debe tener al menos 2 caracteres').max(50, 'La ubicación no puede tener más de 50 caracteres'),
     descripcion: z.string().optional(),
-    content: z.string().optional(),
+    content: z.object({
+        description: z.string(),
+        responsibilities: z.string(),
+        requirements: z.string(),
+        about: z.string(),
+    }),
     data: z.object({
         technology: z.array(z.string()),
-        modalidad: z.string().optional(),
-        nivel: z.string().optional(),
+        modalidad: z.string(),
+        nivel: z.string(),
     })
 })
 
@@ -24,7 +29,12 @@ const partialJobSchema = z.object({
     empresa: z.string().min(2, 'La empresa debe tener al menos 2 caracteres').max(50, 'La empresa no puede tener más de 50 caracteres').optional(),
     ubicacion: z.string().min(2, 'La ubicación debe tener al menos 2 caracteres').max(50, 'La ubicación no puede tener más de 50 caracteres').optional(),
     descripcion: z.string().optional(),
-    content: z.string().optional(),
+    content: z.object({
+        description: z.string().optional(),
+        responsibilities: z.string().optional(),
+        requirements: z.string().optional(),
+        about: z.string().optional(),
+    }).optional(),
     data: z.object({
         technology: z.array(z.string()).optional(),
         modalidad: z.string().optional(),
