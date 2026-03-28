@@ -11,7 +11,6 @@ const ACCEPTED_ORIGINS = [
 export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) => {
   return cors({
     origin: (origin, callback) => {
-      console.log("Origin:", origin);
       if (ACCEPTED_ORIGINS.includes(origin)) {
         callback(null, true);
       } else {
