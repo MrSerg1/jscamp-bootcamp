@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-
+// Actualicé los aria-labels en el código del ejercicio 04-react-router para mantener buenas prácticas de accesibilidad. 
 test("Verifies that there is a search input field on the page", async ({
   page,
 }) => {
