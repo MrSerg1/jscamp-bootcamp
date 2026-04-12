@@ -64,3 +64,19 @@ test("verifies that the user can filter jobs by location and level", async ({
     await expect(jobCards.nth(i)).toHaveAttribute("data-nivel", "senior");
   }
 });
+
+test('verifies the pagination resutls', async ({ page }) => {
+  await page.goto("http://localhost:5173");
+  await page.getByRole("link", { name: "Empleos" }).click();
+
+  const jobCards = await page.locator(".jobs-listings article");
+  await expect(jobCards.first()).toBeVisible();
+  const searchInput = await page.getByRole("searchbox");
+  await searchInput.fill("Python");
+  await page.getByRole("button", { name: "Buscar" }).click();
+  await expect(jobCards.first()).toBeVisible();
+  const paginationButtons = await page.locator("Pagination");
+  await expect(paginationButtons).toBeVisible();
+
+  await paginationButtons.nth(1).click();
+}
