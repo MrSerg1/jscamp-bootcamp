@@ -65,18 +65,58 @@ test("verifies that the user can filter jobs by location and level", async ({
   }
 });
 
-test('verifies the pagination resutls', async ({ page }) => {
+test("verifies the pagination resutls", async ({ page }) => {
   await page.goto("http://localhost:5173");
+
   await page.getByRole("link", { name: "Empleos" }).click();
 
   const jobCards = await page.locator(".jobs-listings article");
+
   await expect(jobCards.first()).toBeVisible();
-  const searchInput = await page.getByRole("searchbox");
-  await searchInput.fill("Python");
-  await page.getByRole("button", { name: "Buscar" }).click();
+
+  await page.locator("#filter-technology").selectOption("Python");
+
   await expect(jobCards.first()).toBeVisible();
-  const paginationButtons = await page.locator("Pagination");
+
+  const paginationButtons = await page.getByRole("navigation", {
+    name: "Pagination",
+  });
+
   await expect(paginationButtons).toBeVisible();
 
-  await paginationButtons.nth(1).click();
-}
+  const firstPageTitles = await jobCards.locator("h3").allTextContents();
+
+  await page.getByRole("link", { name: "next" }).click();
+
+  await expect(jobCards.first()).toBeVisible();
+
+  const secondPageTitles = await jobCards.locator("h3").allTextContents();
+
+  expect(firstPageTitles).not.toEqual(secondPageTitles);
+});
+
+test('verifies that the user can see the job details', async ({ page }) => {
+
+  await page.goto("http://localhost:5173");
+
+  await page.getByRole("link", { name: "Empleos" }).click();
+
+ const jobCards = await page.locator(".jobs-listings article");
+ 
+  await expect(jobCards.first()).toBeVisible();
+
+  await page.getByRole("link", { name: "Ver detalles" }).first().click();
+
+  await expect(page.getByRole("heading", { name: "Desarrollador de Software Senior" })).toBeVisible();
+
+  const applyButton = await page.getByRole('button', { name:'Aplicar' });
+
+  await expect(applyButton).toBeVisible();
+
+  await applyButton.click();
+
+  const appliedButton = await page.getByRole('button', { name:'Aplicado' });
+
+  await expect(appliedButton).toHaveText('Aplicado');
+
+});
