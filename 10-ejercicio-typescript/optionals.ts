@@ -6,9 +6,11 @@ import {
   filterByTechnology,
   filterByMinSalary,
 } from './functions.ts'
+import type { Job } from './objects.ts'
+import type { ExperienceLevel, Technology } from './types.ts'
 
 // Función de búsqueda avanzada con opcionales
-export function advancedSearch(jobs: any[], options: any): any[] {
+export function advancedSearch(jobs: Job[], options: { text?: string; level?: ExperienceLevel; technology?: Technology; minSalary?: number; workMode?: 'presencial' | 'remoto' | 'híbrido' }): Job[] {
   let results = jobs
 
   if (options.text) {
@@ -35,7 +37,7 @@ export function advancedSearch(jobs: any[], options: any): any[] {
 }
 
 // Función con valores por defecto
-export function getRecentJobs(jobs: any[], days: any): any[] {
+export function getRecentJobs(jobs: Job[], days: number = 30): Job[] {
   const cutoffDate = new Date()
   cutoffDate.setDate(cutoffDate.getDate() - days)
 
