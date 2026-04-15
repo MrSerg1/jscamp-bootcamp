@@ -19,7 +19,7 @@ export type Company = {
     name: string
     description: string
     website?: string
-    employess: number
+    employees: number
     foundedYear: number
 }
 
