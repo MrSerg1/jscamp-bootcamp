@@ -6,10 +6,19 @@ import {
   filterByTechnology,
   searchJobs,
 } from './functions.ts'
+import type { Job } from './objects.ts'
+import type { ExperienceLevel, Technology } from './types.ts';
 
 // Interface para servicios de búsqueda
 export interface JobSearchService {
-  /* Deberás definir los tipos de las funciones */
+  searchJobs(jobs: Job[], searchTerm: string ) : Job[];
+  
+  filterByExperience(jobs: Job[], level: ExperienceLevel) : Job[];
+
+  filterByMinSalary(jobs: Job[] , minSalary: number ) : Job[];
+
+  filterByTechnology(jobs: Job[], tech: Technology ) : Job[];
+
 }
 
 export const searchService: JobSearchService = {

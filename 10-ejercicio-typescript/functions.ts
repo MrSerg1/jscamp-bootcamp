@@ -1,4 +1,3 @@
-/* Aquí deberás usar los tipos creados en los ejercicios anteriores para definir los tipos de los parámetros y el valor de retorno de las funciones */
 import type { Job } from './objects.ts'
 import type { ExperienceLevel, Technology } from './types.ts'
 
