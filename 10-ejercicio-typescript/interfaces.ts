@@ -7,7 +7,7 @@ import {
   searchJobs,
 } from './functions.ts'
 import type { Job } from './objects.ts'
-import type { ExperienceLevel, Technology } from './types.ts';
+import type { ExperienceLevel, Technology, ApplicationStatus } from './types.ts';
 
 // Interface para servicios de búsqueda
 export interface JobSearchService {
@@ -29,7 +29,18 @@ export const searchService: JobSearchService = {
 }
 
 // Interface para aplicación a empleo
-export interface JobApplication {}
+export interface JobApplication {
+  id: string;
+  jobId: string;
+  candidateId: string;
+  status: ApplicationStatus;
+  appliedDate: Date;
+  coverLetter?: string;
+}
 
 // Interface que extiende Job con propiedades adicionales
-export interface DetailedJob {}
+export interface DetailedJob extends Job {
+  benefits: string[];
+  requirements: string[];
+  applicationDeadlin?: Date;
+}
