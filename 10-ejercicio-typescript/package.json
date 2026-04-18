@@ -1,11 +1,11 @@
 {
   "name": "typescript-jobs",
   "version": "1.0.0",
-  "description": "",
+  "description": "sistema de gestión de empleos",
   "main": "index.ts",
   "type": "module",
   "scripts": {},
   "keywords": [],
-  "author": "",
-  "license": ""
+  "author": "stejondev",
+  "license": "MIT"
 }

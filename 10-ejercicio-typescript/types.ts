@@ -1,5 +1,3 @@
-/* Aquí deberás definir los tipos literales del primer ejercicio */
-
 export type ExperienceLevel =  'junior' | 'mid' | 'senior'| 'lead';
 export type WorkMode = 'remoto' | 'presencial' | 'hibrido';
 export type ApplicationStatus = 'pending' | 'reviewing' | 'accepted' | 'rejected';
