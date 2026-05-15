@@ -127,6 +127,11 @@ export class JobModel {
     //Filtramos el array de jobs para eliminar el job con el id dado
     jobs = jobs.filter((job) => job.id !== id);
     //Si la longitud del array después de filtrar es igual a la longitud inicial, significa que no se eliminó ningún job (porque no se encontró el id)
-    return jobs.length !== initialLength;
+
+    // Lo ideal es eliminar el job
+    const index = jobs.findIndex((job) => job.id === id);
+    if (index === -1) return null;
+    jobs.splice(index, 1);
+    return true;
   }
 }
