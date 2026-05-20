@@ -65,9 +65,10 @@ describe("Get /jobs", () => {
     const limit = 2;
     const res = await fetch(`${BASE_URL}/jobs?limit=${limit}`);
     const json = await res.json();
-    assert.ok(json.limit === 2, "El límite no se respeto");
+    // Podemos usar la variable que definimos
+    assert.ok(json.limit === limit, "El límite no se respeto");
     assert.ok(
-      json.data.length === 2,
+      json.data.length === limit,
       "El tamaño de la respuesta es diferente del límite pedido",
     );
   });
@@ -84,12 +85,24 @@ describe("Get /jobs", () => {
       "d35b2c89-5d60-4f26-b19a-6cfb2f1a0f57",
       "El offset no se aplico correctamente",
     );
+
+    // Una cosa que podemos hacer es no depender de un ID escrito a mano, si luego cambia, el test se romperá.
+    // Podemos usar un ID real (Esto es otra opción, lo que has hecho no está nada mal)
+    const allJobsResponse = await fetch(`${BASE_URL}/jobs`);
+    const allJobsJson = await allJobsResponse.json();
+    // Obtenemos el ID del segundo trabajo de la lista completa
+    const secondJobId = allJobsJson.data[offset].id;
+    assert.strictEqual(
+      json.data[0].id,
+      secondJobId,
+      "El offset no se aplico correctamente",
+    );
   });
 });
 
 // Tests para los endpoints de jobs (POST)
 describe("POST /jobs", () => {
-  test("El nuevo trabajo se añade corectamente con buen formato", async () => {
+  test("El nuevo trabajo se añade correctamente con buen formato", async () => {
     const newJob = {
       titulo: "Desarrollador Backend",
       empresa: "Tech Solutions",
@@ -383,6 +396,10 @@ describe("PATCH /jobs/:id", () => {
 describe('DELETE /jobs/:id', () => {
     test('Debe recibir 204 y eliminar el trabajo', async () => {
         const validId = 'd35b2c89-5d60-4f26-b19a-6cfb2f1a0f57';
+
+        // Podemos verificar antes si el trabajo existe
+        const getResBeforeDelete = await fetch(`${BASE_URL}/jobs/${validId}`);
+        assert.strictEqual(getResBeforeDelete.status, 200, 'El trabajo debe existir antes de eliminarlo');
 
         const res = await fetch(`${BASE_URL}/jobs/${validId}`, {
             method: 'DELETE',
