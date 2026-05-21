@@ -4,6 +4,8 @@ test("Verifies that there is a search input field on the page", async ({
   page,
 }) => {
   await page.goto("http://localhost:5173");
+  // Podemos buscar también por `getByLabel` si agregamos un aria-label al input
+  // const searchInput = await page.getByLabel(/Buscar trabajos, empresas o habilidades/i);
   const searchInput = await page.getByRole("searchbox");
   await expect(searchInput).toBeVisible();
 });
@@ -18,7 +20,10 @@ test("verifies that the user can type in the search input field", async ({
   const jobCards = await page.locator(".jobs-listings");
   await expect(jobCards).toBeVisible();
 
-  const jobTitles = await jobCards.first().locator("h3").first();
+  // Podemos obtener los títulos de los jobs por `getByRole`
+  const jobTitles = await jobCards.first().getByRole("heading", {
+    level: 3, // <- Indica que es un h3
+  }).first();
   await expect(jobTitles).toHaveText("Desarrollador de Software Senior");
 });
 
@@ -76,7 +81,8 @@ test("verifies the pagination resutls", async ({ page }) => {
 
   await page.locator("#filter-technology").selectOption("Python");
 
-  await expect(jobCards.first()).toBeVisible();
+  // Obtenemos el título del primer job
+  await expect(jobCards.first().getByRole("heading", { level: 3 })).toBeVisible();
 
   const paginationButtons = await page.getByRole("navigation", {
     name: "Pagination",
@@ -84,15 +90,15 @@ test("verifies the pagination resutls", async ({ page }) => {
 
   await expect(paginationButtons).toBeVisible();
 
-  const firstPageTitles = await jobCards.locator("h3").allTextContents();
+  const firstPageTitles = await jobCards.getByRole("heading", { level: 3 }).allTextContents();
 
   await page.getByRole("link", { name: "next" }).click();
 
-  await expect(jobCards.first()).toBeVisible();
+  await expect(jobCards.first().getByRole("heading", { level: 3 })).not.toHaveText(firstPageTitles[0]);
+  
+  const secondPageTitles = await jobCards.getByRole("heading", { level: 3 }).allTextContents();
 
-  const secondPageTitles = await jobCards.locator("h3").allTextContents();
-
-  expect(firstPageTitles).not.toEqual(secondPageTitles);
+  await expect(firstPageTitles).not.toEqual(secondPageTitles);
 });
 
 test('verifies that the user can see the job details', async ({ page }) => {
@@ -109,7 +115,8 @@ test('verifies that the user can see the job details', async ({ page }) => {
 
   await expect(page.getByRole("heading", { name: "Desarrollador de Software Senior" })).toBeVisible();
 
-  const applyButton = await page.getByRole('button', { name:'Aplicar' });
+  // Obtenemos el primer botón de aplicar, para que funcione el test
+  const applyButton = page.getByRole('button', { name:'Aplicar' }).first();
 
   await expect(applyButton).toBeVisible();
 
