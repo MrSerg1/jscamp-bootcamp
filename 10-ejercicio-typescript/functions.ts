@@ -1,5 +1,11 @@
 import type { Job } from './objects.ts'
 import type { ExperienceLevel, Technology } from './types.ts'
+import type { JobSearchService } from './interfaces.ts'
+
+// También podemos hacer:
+export const filterByExperience2: JobSearchService['filterByExperience'] = (jobs, level) => {
+  return jobs.filter((job) => job.experienceLevel === level)
+}
 
 export function filterByExperience(jobs: Job[], level: ExperienceLevel) {
   return jobs.filter((job) => job.experienceLevel === level)
