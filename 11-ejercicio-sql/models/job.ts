@@ -49,9 +49,7 @@ export class JobModel {
       data: {
         technology: (
           db
-            .prepare(
-              "SELECT technology FROM job_technologies WHERE job_id = ?",
-            )
+            .prepare("SELECT technology FROM job_technologies WHERE job_id = ?")
             .all(partialJob.id) as { technology: string }[]
         ).map((tech) => tech.technology),
         modality: partialJob.modality,
@@ -68,7 +66,39 @@ export class JobModel {
   // Obtener un job por ID
   static async getById(id: string): Promise<Job | undefined> {
     // TODO: Debemos hacer la consulta a la base de datos para obtener el job por ID
-    return undefined;
+    // Existen 2 descriptions en la base de datos, una en la tabla jobs y otra en la tabla job_content, debemos traer ambas sin sobreescribir la información.
+    const jobData = db
+      .prepare(
+        "SELECT j.id, j.title, j.company, j.location, j.description, j.modality, j.level, jt.technology, jc.description AS content_description, jc.responsibilities, jc.requirements, jc.about FROM jobs j LEFT JOIN job_content jc ON j.id = jc.job_id LEFT JOIN job_technologies jt ON j.id = jt.job_id WHERE j.id = ?",
+      )
+      .all(id) as any[];
+
+    if (jobData.length === 0) return undefined;
+
+    const jobTechnologies = jobData
+      .map((row) => row.technology)
+      .filter(Boolean);
+
+    const job = jobData[0];
+
+    return {
+      id: job.id,
+      title: job.title,
+      company: job.company,
+      location: job.location,
+      description: job.description,
+      data: {
+        technology: jobTechnologies,
+        modality: job.modality,
+        level: job.level,
+      },
+      content: job.content_description ? {
+        description: job.content_description,
+        responsibilities: job.responsibilities,
+        requirements: job.requirements,
+        about: job.about,
+      } : undefined,
+    };
   }
 
   // Crear un nuevo job
