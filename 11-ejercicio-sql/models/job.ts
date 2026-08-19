@@ -92,12 +92,14 @@ export class JobModel {
         modality: job.modality,
         level: job.level,
       },
-      content: job.content_description ? {
-        description: job.content_description,
-        responsibilities: job.responsibilities,
-        requirements: job.requirements,
-        about: job.about,
-      } : undefined,
+      content: job.content_description
+        ? {
+            description: job.content_description,
+            responsibilities: job.responsibilities,
+            requirements: job.requirements,
+            about: job.about,
+          }
+        : undefined,
     };
   }
 
@@ -107,6 +109,41 @@ export class JobModel {
       id: crypto.randomUUID(),
       ...input,
     };
+    const insertJob = db.prepare(
+      `INSERT INTO jobs (id, title, company, location, description, modality, level) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    );
+    const insertTech = db.prepare(
+      `INSERT INTO job_technologies (job_id, technology) VALUES (?, ?)`,
+    );
+    const insertContent = db.prepare(
+      `INSERT INTO job_content (job_id, description, id, responsibilities, requirements, about) VALUES (?, ?, ?, ?, ?, ?)`,
+    );
+
+    const createNewJob = db.transaction((jobData) => {
+      insertJob.run(
+        jobData.id,
+        jobData.title,
+        jobData.company,
+        jobData.location,
+        jobData.description,
+        jobData.data.modality,
+        jobData.data.level,
+      );
+      for (const tech of jobData.data.technology) {
+        insertTech.run(jobData.id, tech);
+      }
+      if (jobData.content) {
+        insertContent.run(
+          jobData.id,
+          jobData.content.description,
+          crypto.randomUUID(),
+          jobData.content.responsibilities,
+          jobData.content.requirements,
+          jobData.content.about,
+        );
+      }
+    });
+    createNewJob(newJob);
 
     // TODO: Debemos insertar el job en la base de datos
     return newJob;
