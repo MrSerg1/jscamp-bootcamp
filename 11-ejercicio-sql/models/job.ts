@@ -38,6 +38,18 @@ export class JobModel {
       query += " WHERE " + conditions.join(" AND ");
     }
 
+    if (filters?.limit !== undefined) {
+      query += " LIMIT ?";
+      values.push(filters.limit);
+    } else if (filters?.offset !== undefined) {
+      query += " LIMIT -1";
+    }
+
+    if (filters?.offset !== undefined) {
+      query += " OFFSET ?";
+      values.push(filters.offset);
+    }
+
     const jobData = db.prepare(query).all(...values) as any[];
 
     return jobData.map((partialJob) => ({
