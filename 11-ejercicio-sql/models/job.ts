@@ -57,7 +57,7 @@ export class JobModel {
       },
       content: db
         .prepare(
-          "SELECT description, responsibilities, requirements, about  FROM job_content WHERE job_id = ?",
+          "SELECT description, responsibilities, requirements, about FROM job_content WHERE job_id = ?",
         )
         .get(partialJob.id) as JobContent | undefined,
     }));
@@ -109,6 +109,7 @@ export class JobModel {
       id: crypto.randomUUID(),
       ...input,
     };
+    // TODO: Debemos insertar el job en la base de datos
     const insertJob = db.prepare(
       `INSERT INTO jobs (id, title, company, location, description, modality, level) VALUES (?, ?, ?, ?, ?, ?, ?)`,
     );
@@ -144,20 +145,103 @@ export class JobModel {
       }
     });
     createNewJob(newJob);
-
-    // TODO: Debemos insertar el job en la base de datos
     return newJob;
   }
 
   // Eliminar un job
   static async delete(id: string): Promise<boolean> {
     // TODO: Debemos eliminar el job de la base de datos
+    const deleteJob = db.prepare("DELETE FROM jobs WHERE id = ?");
+    const result = deleteJob.run(id);
+    if (result.changes > 0) {
+      return true;
+    }
     return false;
   }
 
   // Actualizar un job
   static async update(id: string, input: UpdateJobDTO): Promise<Job | null> {
-    // TODO: Debemos actualizar el job en la base de datos
-    return null;
+    //Verificar que existe
+    const existingJob = await this.getById(id);
+    if (!existingJob) {
+      return null;
+    }
+
+    const updates: string[] = [];
+    const values: string[] = [];
+
+    if (input.title) {
+      updates.push("title = ?");
+      values.push(input.title);
+    }
+    if (input.company) {
+      updates.push("company = ?");
+      values.push(input.company);
+    }
+    if (input.location) {
+      updates.push("location = ?");
+      values.push(input.location);
+    }
+    if (input.description) {
+      updates.push("description = ?");
+      values.push(input.description);
+    }
+    if (input.data?.modality) {
+      updates.push("modality = ?");
+      values.push(input.data.modality);
+    }
+    if (input.data?.level) {
+      updates.push("level = ?");
+      values.push(input.data.level);
+    }
+
+    //Preparar statements SQL
+    const deleteTechs = db.prepare(
+      "DELETE FROM job_technologies WHERE job_id = ?",
+    );
+    const insertTech = db.prepare(
+      "INSERT INTO job_technologies (job_id, technology) VALUES (?, ?)",
+    );
+    const deleteContent = db.prepare(
+      "DELETE FROM job_content WHERE job_id = ?",
+    );
+    const insertContent = db.prepare(
+      `INSERT INTO job_content (job_id, description, id, responsibilities, requirements, about)
+     VALUES (?, ?, ?, ?, ?, ?)`,
+    );
+
+    const updateTransaction = db.transaction(() => {
+      if (updates.length > 0) {
+        const updateJobs = db.prepare(
+          `UPDATE jobs SET ${updates.join(", ")} WHERE id = ?`,
+        );
+        updateJobs.run(...values, id);
+      }
+
+      if (input.data?.technology) {
+        deleteTechs.run(id);
+        for (const tech of input.data.technology) {
+          insertTech.run(id, tech);
+        }
+      }
+
+      if (input.content) {
+        deleteContent.run(id);
+        insertContent.run(
+          id,
+          input.content.description,
+          crypto.randomUUID(),
+          input.content.responsibilities,
+          input.content.requirements,
+          input.content.about,
+        );
+      }
+    });
+
+    updateTransaction();
+
+    //Retorna el job actualizado
+    const updatedJob = await this.getById(id);
+    return updatedJob ?? null;
   }
 }
