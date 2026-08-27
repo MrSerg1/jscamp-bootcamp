@@ -23,7 +23,7 @@ Recordatorio: El proyecto está escrito en **TypeScript** y se ejecuta con `tsx`
 ├── jobs.json           # Datos iniciales en JSON (referencia)
 ├── tsconfig.json       # Configuración de TypeScript
 ├── db/
-│   ├── database.ts   # 👈 Aquí crearás la conexión a SQLite
+│   ├── database.ts     # 👈 Aquí crearás la conexión a SQLite
 │   └── seed.ts         # 👈 Aquí crearás las tablas e insertarás datos
 ├── models/
 │   └── job.ts          # 👈 Modelo actual (lee del JSON, hay que migrar a SQL)
