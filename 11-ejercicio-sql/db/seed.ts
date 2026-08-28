@@ -1,6 +1,6 @@
-import { export as db } from "./database.js";
-import jobs from "../jobs.json";
 import crypto from "node:crypto";
+import jobs from "../jobs.json";
+import { db } from "./database.js";
 
 db.exec(`
     CREATE TABLE IF NOT EXISTS jobs (
@@ -44,7 +44,25 @@ const insertContent = db.prepare(
   `INSERT INTO job_content (job_id, description, id, responsibilities, requirements, about) VALUES (?, ?, ?, ?, ?, ?)`,
 );
 
-const seedAll = db.transaction((jobsData) => {
+//  Hacemos un type de cada job
+type SeedJob = {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  description: string;
+  modality: string;
+  level: string;
+  technologies: string[];
+  content: {
+    description: string;
+    responsibilities: string;
+    requirements: string;
+    about: string;
+  };
+};
+
+const seedAll = db.transaction((jobsData: SeedJob[]) => {
   for (const job of jobsData) {
     insertJob.run(
       job.id,
@@ -69,5 +87,7 @@ const seedAll = db.transaction((jobsData) => {
   }
 });
 
+// Limpia las tablas para poder re-ejecutar el seed, y que no se rompa nada
+db.exec("DELETE FROM job_technologies; DELETE FROM job_content; DELETE FROM jobs;");
 seedAll(jobs);
 console.log(" Database seeded successfully!");
