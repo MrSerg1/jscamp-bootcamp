@@ -1,0 +1,21 @@
+name: '03 - Schedule'
+
+on:
+  schedule:
+    # Expresión cron: "0 9 * * 1" (GitHub Actions la evalúa en UTC)
+    #   ┌──────────── minuto (0-59)                     → 0 = minuto 0
+    #   │ ┌────────── hora (0-23, UTC)                  → 9 = 9:00 UTC
+    #   │ │ ┌──────── día del mes (1-31)                → * = cualquier día
+    #   │ │ │ ┌────── mes (1-12)                        → * = cualquier mes
+    #   │ │ │ │ ┌──── día de la semana (0-6, dom=0)     → 1 = lunes
+    #   │ │ │ │ │
+    #   0 9 * * 1
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+jobs:
+  saludo-programado:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Saludo
+        run: echo "Hola desde GitHub Actions!"
