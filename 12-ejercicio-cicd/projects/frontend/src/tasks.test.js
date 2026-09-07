@@ -13,7 +13,7 @@ describe("task helpers", () => {
       total: 3,
       completed: 1,
       pending: 2,
-      progress: 33,
+      progress: 99,
     });
   });
 
