@@ -1,0 +1,15 @@
+FROM golang:1.24-alpine AS builder
+
+ENV CGO_ENABLED=0
+
+WORKDIR /app
+
+COPY . .
+
+RUN go build -o /server main.go
+
+FROM alpine:3.20
+
+COPY --from=builder /server /server
+
+CMD ["/server"]
